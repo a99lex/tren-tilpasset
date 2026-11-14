@@ -137,3 +137,8 @@ footer { padding-block: 22px 32px; font-size: 13px; }
 
 .plan-section { margin-block: 18px; }
 .plan-section h3 { margin: 0 0 5px; font-size: 16px; }
+
+.phase-label { display: block; margin-top: 16px; }
+.workout-options { margin-top: 14px; }
+#result:focus-visible { outline: 2px solid var(--green); outline-offset: 3px; }
+#planView:has(#result[hidden]) { grid-template-columns: minmax(0, 540px); }

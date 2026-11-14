@@ -62,8 +62,6 @@ const englishCopy = {
   "Slett økt": "Delete workout",
   "Kunne ikke slette": "Could not delete",
   "Øktforslag": "Suggested workout",
-  "Trykk «Lag økt» for å bruke de nye valgene.": "Select “Build workout” to apply your changes.",
-  "Velg det som passer situasjonen din, og trykk «Lag økt».": "Choose what fits your situation and select “Build workout”."
 };
 const t = value => englishCopy[value] ?? value;
 const byId = id => document.getElementById(id);
@@ -339,11 +337,18 @@ function showView(log) {
 }
 byId("planTab").onclick = () => showView(false);
 byId("logTab").onclick = () => showView(true);
-byId("planner").addEventListener("submit", event => { event.preventDefault(); renderPlan(); });
+const resultPanel = byId("result");
+byId("planner").addEventListener("submit", event => {
+  event.preventDefault();
+  renderPlan();
+  resultPanel.hidden = false;
+  resultPanel.focus();
+});
+
 function resetResult() {
   updateSymptomFields();
-  byId("result").innerHTML = `<h2>${t("Øktforslag")}</h2><p class="empty">${t("Trykk «Lag økt» for å bruke de nye valgene.")}</p>`;
+  resultPanel.hidden = true;
+  resultPanel.replaceChildren();
 }
 byId("planner").addEventListener("change", resetResult);
 symptomSearch.addEventListener("input", resetResult);
-byId("result").innerHTML = `<h2>${t("Øktforslag")}</h2><p class="empty">${t("Velg det som passer situasjonen din, og trykk «Lag økt».")}</p>`;
