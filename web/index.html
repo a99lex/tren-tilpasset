@@ -8,11 +8,9 @@
 <main><section class="hero"><h1>Train on your terms<span>.</span></h1><p>Choose what you need to protect and build a workout around your recovery stage and equipment.</p></section>
 <div class="grid" id="planView">
 <form class="panel" id="planner"><h2>Adapt your workout</h2>
-<fieldset><legend>What do you need to protect?</legend><div class="choices" id="conditions"></div>
-<label class="symptom-label" for="symptomSearch">Search by symptom or condition</label>
-<input type="search" id="symptomSearch" placeholder="e.g. jumper’s knee, sciatica or ankle sprain" autocomplete="off" aria-describedby="symptomHelp">
-<p class="symptom-help" id="symptomHelp">Choose a result to add the relevant body area. The search does not diagnose conditions.</p>
-<p class="symptom-help" id="symptomStatus" role="status"></p><div id="symptomResults" class="symptom-results" aria-label="Search results"></div></fieldset>
+<label class="symptom-label" for="symptomSearch">Describe what you need to protect</label>
+<input type="search" id="symptomSearch" autocomplete="off" aria-describedby="symptomHelp" required>
+<p class="symptom-help" id="symptomHelp">Enter your symptoms or injury in Norwegian or English.</p>
 <div class="fields">
 <label>Stage<select id="phase"><option value="early">Recent / acute</option><option value="recovery">Rehabilitation</option><option value="return">Return to training</option></select></label>
 <label>Equipment<select id="gear"><option value="body">Bodyweight</option><option value="free">Free weights</option></select></label>

@@ -15,9 +15,6 @@ const englishCopy = {
   "Fersk / akutt": "Recent / acute",
   "Opptrening": "Rehabilitation",
   "Tilbake til trening": "Return to training",
-  "Velg annen skade": "Choose another injury",
-  "Ingen treff på stikkordet.": "No matches for this search.",
-  " er valgt.": " selected.",
   "Rolig gange på flatt underlag": "Easy walk on level ground",
   "Gå i et tempo der du kan snakke uanstrengt.": "Walk at a pace where you can comfortably hold a conversation.",
   "Rolige skulderbladbevegelser": "Gentle shoulder blade squeezes",
@@ -37,7 +34,7 @@ const englishCopy = {
   "Vent med å lage økt": "Wait before planning a workout",
   "Følg restriksjonene du har fått fra behandler eller tatovør.": "Follow the restrictions from your clinician or tattoo artist.",
   "Bruk opplegget fra behandleren": "Follow your clinician’s plan",
-  "En annen skade trenger konkrete rammer for hva som kan belastes. Legg inn en støttet kategori hvis den beskriver skaden din.": "Other injuries need specific guidance on which movements and loads are appropriate. Select a supported category if it fits your situation.",
+  "En annen skade trenger konkrete rammer for hva som kan belastes. Legg inn en støttet kategori hvis den beskriver skaden din.": "This description needs more specific guidance on which movements and loads are appropriate. Follow your clinician’s exercise plan.",
   "Avvent en treningsøkt": "Hold off on a workout",
   "Ved fersk skade må valg av aktivitet ta hensyn til hva som har skjedd og hva du kan belaste. Følg råd fra behandleren.": "After a recent injury, follow your clinician’s advice on activity and how much weight you can put on the injured area.",
   "Vent med en strukturert økt": "Hold off on a structured workout",
@@ -74,33 +71,26 @@ const conditions = {
   tattoo: "Tatovering", back: "Rygg", knee: "Kne", shoulder: "Skulder",
   ankle: "Ankel / fot", wrist: "Håndledd", other: "Annen skade"
 };
-const symptomKeywords = {
-  tattoo: ["new tattoo", "fresh tattoo"],
-  back: ["lower back", "sciatica", "herniated disc", "slipped disc", "back strain"],
-  knee: ["jumper’s knee", "jumper knee", "patellar tendinopathy", "runner’s knee", "meniscus", "ACL", "kneecap"],
-  shoulder: ["frozen shoulder", "rotator cuff", "shoulder impingement"],
-  ankle: ["sprained ankle", "ankle sprain", "Achilles tendon", "plantar fasciitis", "heel spur", "toe"],
-  wrist: ["carpal tunnel", "wrist sprain", "thumb", "finger"],
-  other: ["tennis elbow", "golfer’s elbow", "neck pain", "hip", "groin strain", "hamstring strain",
-    "calf strain", "shin splints", "concussion", "rib", "chest"]
+const symptomPatterns = {
+  tattoo: /\b(?:tattoo\w*|tatover\w*|tattover\w*|tattver\w*)\b/,
+  back: /\b(?:back|lower back|lumbar|sciatica|slipped disc|herniated disc|rygg\w*|korsryg\w*|isjias|prolaps)\b/,
+  knee: /\b(?:knee\w*|kne(?:et|smerter|skal|skade|plager)?|hopperkne|loperkne|patellar\w*|menis[ck]\w*|korsband\w*|acl)\b/,
+  shoulder: /\b(?:shoulder\w*|rotator\s*cuff|skulder\w*)\b/,
+  ankle: /\b(?:ankle\w*|foot|feet|toe\w*|achil{1,2}es\w*|ak{1,2}il{1,2}es\w*|ankel\w*|fot\w*|overtrakk\w*|heel\w*|plantar\s*fasci\w*|plantarfasci\w*|hal\w*)\b/,
+  wrist: /\b(?:wrist\w*|hand|finger\w*|thumb\w*|carpal tunnel|handledd\w*|tommel\w*)\b/,
+  other: /\b(?:elbow\w*|albue\w*|neck|nakke\w*|hip|hofte\w*|groin|lyske\w*|hamstring\w*|laret|larsmerter|legg\w*|calf|shin\w*|rib\w*|chest|bryst\w*|concussion|hjerneryst\w*)\b/
 };
-const normalize = value => value.toLocaleLowerCase("nb-NO").normalize("NFD")
+
+const normalize = value => value.toLowerCase().normalize("NFD")
   .replace(/\p{M}/gu, "").replace(/ø/g, "o").replace(/[’']/g, "")
   .replace(/[^a-z0-9]+/g, " ").trim();
 
-function symptomMatches(query) {
-  const words = normalize(query).split(" ").filter(Boolean);
-  if (!words.length) return [];
-  const ignored = ["my", "in", "with", "training", "exercise", "pain", "after"];
-  const terms = words.filter(word => !ignored.includes(word));
-  if (!terms.length) return [];
-  return Object.entries(symptomKeywords).flatMap(([area, keywords]) => {
-    const names = new Set([t(conditions[area]), ...keywords]);
-    return [...names].filter(name => {
-      const normalized = normalize(name);
-      return terms.every(word => normalized.split(" ").some(part => part.startsWith(word)));
-    }).map(name => ({area, name}));
-  }).slice(0, 8);
+function readSymptoms(query) {
+  const normalized = normalize(query);
+  if (!normalized) return {areas: query.trim() ? ["other"] : [], acute: false};
+  const areas = Object.entries(symptomPatterns).filter(([, pattern]) => pattern.test(normalized)).map(([area]) => area);
+  const acute = /\b(?:rok\w*|avrevet|ruptur\w*|torn|tear|snapped|fractur\w*|broken|brudd\w*|dislocat\w*|luksasj\w*|concussion|hjerneryst\w*)\b/.test(normalized);
+  return {areas: areas.length ? areas : ["other"], acute};
 }
 
 const restrictions = {
@@ -109,53 +99,20 @@ const restrictions = {
 };
 const phases = { early: "Fersk / akutt", recovery: "Opptrening", return: "Tilbake til trening" };
 
-function choices(id, values, initial) {
-  byId(id).innerHTML = Object.entries(values).map(([key, label]) =>
-    `<label><input type="checkbox" value="${key}" ${key === initial ? "checked" : ""}><span>${t(label)}</span></label>`
-  ).join("");
-}
-const fromKneeGuide = new URLSearchParams(location.search).get("guide") === "knee";
-choices("conditions", conditions, fromKneeGuide ? "knee" : "tattoo");
-byId("locationField").hidden = fromKneeGuide;
-choices("restrictions", restrictions);
+const symptomSearch = byId("symptomSearch");
+const guide = new URLSearchParams(location.search).get("guide");
+if (guide === "knee") symptomSearch.value = "Jumper’s knee";
+if (guide === "tattoo") symptomSearch.value = "New tattoo";
+
+byId("restrictions").innerHTML = Object.entries(restrictions).map(([key, label]) =>
+  `<label><input type="checkbox" value="${key}"><span>${t(label)}</span></label>`
+).join("");
 const selected = id => [...byId(id).querySelectorAll(":checked")].map(input => input.value);
 
-const symptomSearch = byId("symptomSearch");
-const symptomResults = byId("symptomResults");
-const symptomStatus = byId("symptomStatus");
-
-function renderSymptomResults() {
-  const query = symptomSearch.value.trim();
-  const matches = symptomMatches(query);
-  symptomResults.replaceChildren();
-  symptomStatus.textContent = "";
-  if (!query) return;
-  const options = matches.length ? matches : [{area:"other", name:t("Velg annen skade")}];
-  if (!matches.length) symptomStatus.textContent = t("Ingen treff på stikkordet.");
-  options.forEach(({area, name}) => {
-    const button = document.createElement("button");
-    button.type = "button";
-    button.textContent = name === t(conditions[area]) ? name : name + " · " + t(conditions[area]);
-    button.addEventListener("click", () => {
-      const input = byId("conditions").querySelector(`[value="${area}"]`);
-      input.checked = true;
-      input.dispatchEvent(new Event("change", {bubbles:true}));
-      symptomSearch.value = "";
-      symptomResults.replaceChildren();
-      symptomStatus.textContent = t(conditions[area]) + t(" er valgt.");
-      symptomSearch.focus();
-    });
-    symptomResults.append(button);
-  });
+function updateSymptomFields() {
+  byId("locationField").hidden = !readSymptoms(symptomSearch.value).areas.includes("tattoo");
 }
-
-symptomSearch.addEventListener("input", renderSymptomResults);
-symptomSearch.addEventListener("keydown", event => {
-  if (event.key !== "Enter") return;
-  event.preventDefault();
-  if (symptomResults.childElementCount === 1) symptomResults.firstElementChild.click();
-  else symptomResults.firstElementChild?.focus();
-});
+updateSymptomFields();
 
 const filters = {
   back: ["bend", "weighted"], knee: ["load"], ankle: ["load"],
@@ -176,9 +133,14 @@ const exercises = [
   {name:"Rolig håndåpning", tags:["arm"], dose:"6–8 reps", detail:"Sitt med avslappede skuldre. Åpne og lukk hånden rolig."}
 ];
 
-function plan({areas, blocked, phase, location, gear, alert, hold}) {
+function plan({areas, acute, blocked, phase, location, gear, alert, hold}) {
   const injury = areas.some(area => area !== "tattoo");
   if (alert) return {message:"Sett treningen på pause", detail:"Kontakt legevakt på 116 117 hvis det haster. Ved akutt alvorlige symptomer, ring 113."};
+  if (acute) return {
+    message: "Check with a clinician before training",
+    detail: "If this is a recent suspected rupture, fracture or other serious injury, seek prompt medical assessment. If it has already been assessed, follow your clinician’s return-to-training plan."
+  };
+  if (!areas.length) return {message:"Describe what you need to protect", detail:"Enter a symptom, injury or other reason to adapt your workout."};
   if (hold) return {message:"Vent med å lage økt", detail:"Følg restriksjonene du har fått fra behandler eller tatovør."};
   if (areas.includes("other")) return {message:"Bruk opplegget fra behandleren", detail:"En annen skade trenger konkrete rammer for hva som kan belastes. Legg inn en støttet kategori hvis den beskriver skaden din."};
   if (injury && phase === "early") return {message:"Avvent en treningsøkt", detail:"Ved fersk skade må valg av aktivitet ta hensyn til hva som har skjedd og hva du kan belaste. Følg råd fra behandleren."};
@@ -205,11 +167,11 @@ function saveHistory(next) {
 }
 
 function renderPlan() {
-  const areas = selected("conditions");
+  const {areas, acute} = readSymptoms(symptomSearch.value);
   const phase = byId("phase").value;
   const minutes = Number(byId("length").value);
   const result = byId("result");
-  const selection = plan({areas, phase, blocked:selected("restrictions"), location:byId("location").value,
+  const selection = plan({areas, acute, phase, blocked:selected("restrictions"), location:byId("location").value,
     gear:byId("gear").value, alert:byId("alert").checked, hold:byId("hold").checked});
   if (selection.message) {
     result.innerHTML = `<h2>${t(selection.message)}</h2><p class="note warn">${t(selection.detail)}</p>`;
@@ -276,8 +238,10 @@ function showView(log) {
 byId("planTab").onclick = () => showView(false);
 byId("logTab").onclick = () => showView(true);
 byId("planner").addEventListener("submit", event => { event.preventDefault(); renderPlan(); });
-byId("planner").addEventListener("change", () => {
-  byId("locationField").hidden = !selected("conditions").includes("tattoo");
+function resetResult() {
+  updateSymptomFields();
   byId("result").innerHTML = `<h2>${t("Øktforslag")}</h2><p class="empty">${t("Trykk «Lag økt» for å bruke de nye valgene.")}</p>`;
-});
+}
+byId("planner").addEventListener("change", resetResult);
+symptomSearch.addEventListener("input", resetResult);
 byId("result").innerHTML = `<h2>${t("Øktforslag")}</h2><p class="empty">${t("Velg det som passer situasjonen din, og trykk «Lag økt».")}</p>`;

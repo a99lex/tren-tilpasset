@@ -130,13 +130,6 @@ footer { padding-block: 22px 32px; font-size: 13px; }
 }
 #symptomSearch:focus-visible { outline: 2px solid var(--green); outline-offset: 3px; }
 .symptom-help { color: var(--muted); font-size: 13px; margin-top: 5px; }
-.symptom-help:empty, .symptom-results:empty { display: none; }
-.symptom-results { display: grid; gap: 5px; margin-top: 8px; }
-.symptom-results button {
-  min-height: 40px; padding: 6px 10px; text-align: left;
-  color: var(--green); background: var(--mint); border: 1px solid var(--line); border-radius: 8px;
-}
-
 .nav a { align-self: center; padding: 5px 10px; font-weight: 650; }
 @media (max-width: 380px) {
   .nav a { padding-inline: 6px; }
