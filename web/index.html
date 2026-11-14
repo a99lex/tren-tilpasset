@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Build a workout around the movements you need to avoid, your recovery stage and your equipment.">
+<title>Tren tilpasset – Adaptive workout planner</title>
+<link rel="canonical" href="__ORIGIN__/"><meta name="theme-color" content="#f5f6f1"><link rel="stylesheet" href="/style.css"></head>
+<body>
+<header><a class="brand" href="/"><span class="mark" aria-hidden="true">↗</span> Tren tilpasset</a><nav class="nav" aria-label="Main navigation"><button id="planTab" aria-current="true">Plan</button><button id="logTab">Log</button></nav></header>
+<main><section class="hero"><h1>Train on your terms<span>.</span></h1><p>Choose what you need to protect and build a workout around your recovery stage and equipment.</p></section>
+<div class="grid" id="planView">
+<form class="panel" id="planner"><h2>Adapt your workout</h2>
+<fieldset><legend>What do you need to protect?</legend><div class="choices" id="conditions"></div>
+<label class="symptom-label" for="symptomSearch">Search by symptom or condition</label>
+<input type="search" id="symptomSearch" placeholder="e.g. jumper’s knee, sciatica or ankle sprain" autocomplete="off" aria-describedby="symptomHelp">
+<p class="symptom-help" id="symptomHelp">Choose a result to add the relevant body area. The search does not diagnose conditions.</p>
+<p class="symptom-help" id="symptomStatus" role="status"></p><div id="symptomResults" class="symptom-results" aria-label="Search results"></div></fieldset>
+<div class="fields">
+<label>Stage<select id="phase"><option value="early">Recent / acute</option><option value="recovery">Rehabilitation</option><option value="return">Return to training</option></select></label>
+<label>Equipment<select id="gear"><option value="body">Bodyweight</option><option value="free">Free weights</option></select></label>
+<label id="locationField">Tattoo location<select id="location"><option value="arm">Forearm / arm</option><option value="leg">Leg / foot</option><option value="torso">Back / chest / abdomen</option><option value="other">Other location</option></select></label>
+<label>Workout length<select id="length"><option value="10">About 10 min</option><option selected value="15">About 15 min</option><option value="20">About 20 min</option></select></label></div>
+<fieldset><legend>Movements to avoid</legend><div class="choices" id="restrictions"></div></fieldset>
+<label class="check"><input type="checkbox" id="hold">I have an exercise restriction or have been advised to pause training.</label>
+<label class="check"><input type="checkbox" id="alert">I have a warning sign listed below.</label>
+<details class="safety"><summary>See warning signs</summary><p>Inability to put weight on the leg after an injury, significant or increasing swelling, rapidly worsening pain, new weakness or numbness, or increasing redness, warmth, pus or fever after getting a tattoo.</p><p>With back pain, seek emergency assessment for new bladder or bowel problems, numbness around the genitals or anus, or weakness in both legs.</p></details>
+<button class="primary" type="submit">Build workout</button></form>
+<section class="panel" id="result" aria-live="polite"></section></div>
+<section id="logView" class="panel" hidden><h2>Workout log</h2><p class="subtle">Workouts you’ve saved on this device.</p><div id="entries"></div></section></main>
+<footer><p class="guide-links"><a href="/working-out-with-a-new-tattoo/">Working out with a new tattoo</a> · <a href="/training-with-jumpers-knee/">Training with jumper’s knee</a></p>
+<p class="guide-links">We count page views and workouts created in aggregate. Your workout selections and log are processed on this device.</p>
+These are general activity suggestions. Follow your clinician’s plan for injuries and your tattoo artist’s aftercare advice for tattoos.
+<details><summary>Health sources</summary><a href="https://eadv.org/wp-content/uploads/2023/04/EADV-TATTOO-Tattoo-Aftercare.pdf">EADV tattoo aftercare</a> · <a href="https://www.nhs.uk/conditions/back-pain/">NHS back pain</a> · <a href="https://www.nhs.uk/symptoms/knee-pain/">NHS knee pain</a> · <a href="https://www.nhs.uk/conditions/sprains-and-strains/">NHS sprains and strains</a></details></footer>
+<script src="/app.js"></script></body></html>
