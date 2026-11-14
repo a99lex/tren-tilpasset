@@ -67,15 +67,17 @@ const t = value => englishCopy[value] ?? value;
 const byId = id => document.getElementById(id);
 const conditions = {
   tattoo: "Tatovering", back: "Rygg", knee: "Kne", shoulder: "Skulder",
-  ankle: "Ankel / fot", wrist: "Håndledd", neck: "Neck", elbow: "Elbow", forearm: "Forearm", upperArm: "Upper arm", arm: "Arm", thigh: "Thigh", hip: "Hip / groin", lowerLeg: "Lower leg", other: "Annen skade"
+  ankle: "Ankle / Achilles", foot: "Foot / toes", wrist: "Håndledd", hand: "Hand / fingers",
+  head: "Head / face", chest: "Chest / ribs", abdomen: "Abdomen", pelvis: "Pelvis / tailbone",
+  neck: "Neck", elbow: "Elbow", forearm: "Forearm", upperArm: "Upper arm", arm: "Arm", thigh: "Thigh", hip: "Hip / groin", lowerLeg: "Lower leg", other: "Annen skade"
 };
 const symptomPatterns = {
   tattoo: /\b(?:tattoo\w*|tatover\w*|tattover\w*|tattver\w*)\b/,
   back: /\b(?:back|lower back|lumbar|sciatica|slipped disc|herniated disc|rygg\w*|korsryg\w*|isjias|prolaps)\b/,
   knee: /\b(?:knee\w*|kne(?:et|smerter|skal|skade|plager)?|hopperkne|loperkne|patellar\w*|menis[ck]\w*|korsband\w*|acl)\b/,
   shoulder: /\b(?:shoulder\w*|rotator\s*cuff|skulder\w*)\b/,
-  ankle: /\b(?:ankle\w*|foot|feet|toe\w*|achil{1,2}es\w*|ak{1,2}il{1,2}es\w*|ankel\w*|fot\w*|overtrakk\w*|heel\w*|plantar\s*fasci\w*|plantarfasci\w*|hal\w*)\b/,
-  wrist: /\b(?:wrist\w*|hand|finger\w*|thumb\w*|carpal tunnel|handledd\w*|tommel\w*)\b/,
+  ankle: /\b(?:ankle\w*|achil{1,2}es\w*|ak{1,2}il{1,2}es\w*|ankel\w*|overtrakk\w*)\b/,
+  wrist: /\b(?:wrist\w*|carpal tunnel|handledd\w*)\b/,
   elbow: /\b(?:elbow\w*|albue\w*|tennisalbue\w*|golfalbue\w*)\b/,
   neck: /\b(?:neck|nakke\w*)\b/,
   hip: /\b(?:hip\w*|hofte\w*|groin|lyske\w*|setesmerte\w*|glute\w*)\b/,
@@ -84,7 +86,12 @@ const symptomPatterns = {
   upperArm: /\b(?:upper arms?|overarm\w*|biceps\w*|triceps\w*)\b/,
   arm: /\b(?:arms?|armen|armsmerter|armskade\w*)\b/,
   thigh: /\b(?:thigh\w*|lar(?:et|ene|smerte\w*|strekk\w*|skade\w*|muskel\w*)?|hamstring\w*|quadriceps\w*|quads)\b/,
-  other: /\b(?:rib\w*|chest|bryst\w*|concussion|hjerneryst\w*)\b/
+  foot: /\b(?:foot|feet|toe\w*|fot\w*|tarne|ta(?:en|er|smerte\w*|skade\w*)|heel\w*|plantar\s*fasci\w*|plantarfasci\w*|hal(?:en|smerte\w*|spore\w*)?)\b/,
+  hand: /\b(?:hands?|handen|hand(?:flate|smerte|skade)\w*|finger\w*|thumb\w*|tommel\w*|knuckle\w*|kno(?:ke\w*|en|er))\b/,
+  head: /\b(?:head|hode\w*|skull|kran\w*|face|ansikt\w*|jaw|kjeve\w*|eye|oye\w*|nose|nese\w*)\b/,
+  chest: /\b(?:rib\w*|chest|bryst\w*|sternum|pectoral\w*)\b/,
+  abdomen: /\b(?:abdom\w*|mage\w*|buk(?:vegg\w*|muskel\w*|smerte\w*)?)\b/,
+  pelvis: /\b(?:pelvi\w*|bekken\w*|tailbone|coccyx|halebein\w*|haleben\w*|sacrum|korsbein\w*)\b/
 };
 
 const normalize = value => value.toLowerCase().normalize("NFD")
@@ -119,6 +126,39 @@ const conditionsFromReview = [
 ];
 
 const additionalConditions = [
+  {name:"Concussion or head injury", area:"head", pause:true, terms:/\b(?:concussion\w*|head injur\w*|head trauma|hjerneryst\w*|hodeskade\w*|slag mot hodet|slo hodet)\b/},
+  {name:"Facial or eye injury", area:"head", pause:true, terms:/\b(?:facial injur\w*|eye injur\w*|ansiktsskade\w*|oyeskade\w*|nesebrudd\w*)\b/},
+  {name:"Clavicle injury", area:"shoulder", terms:/\b(?:clavicl\w*|collar\s*bone\w*|kragebein\w*|krageben\w*)\b/},
+  {name:"AC joint injury", area:"shoulder", pause:true, terms:/\b(?:ac joint|ac ledd\w*|acromioclavicular\w*)\b/},
+  {name:"Rotator cuff symptoms", area:"shoulder", terms:/\b(?:rotator\s*cuff\w*|subacromial\w*|subakromial\w*|shoulder impingement|supraspinatus)\b/},
+  {name:"Labrum injury", area:null, pause:true, terms:/\b(?:labrum\w*|labral\w*|slap (?:tear|lesion|skade))\b/},
+  {name:"Biceps or triceps symptoms", area:"upperArm", terms:/\b(?:biceps\w*|triceps\w*)\b/},
+  {name:"Carpal tunnel symptoms", area:"wrist", terms:/\b(?:carpal tunnel|karpaltunnel\w*)\b/},
+  {name:"Thumb-side wrist symptoms", area:"wrist", terms:/\b(?:de quervain\w*|quervain\w*)\b/},
+  {name:"Thumb or finger injury", area:"hand", pause:true, terms:/\b(?:skier'?s thumb|gamekeeper'?s thumb|skitommel\w*|mallet finger|droppfinger\w*|jersey finger|triggerfinger\w*|trigger finger)\b/},
+  {name:"Wrist injury requiring assessment", area:"wrist", pause:true, terms:/\b(?:tfcc|scapholunate\w*|skafoid\w*|scaphoid\w*|batbein\w*|batben\w*)\b/},
+  {name:"Rib or chest injury", area:"chest", terms:/\b(?:rib\w*|sternum|brystbein\w*|brystben\w*|intercostal\w*|mellomribb\w*)\b/},
+  {name:"Abdominal wall injury", area:"abdomen", terms:/\b(?:abdominal strain|bukvegg\w*|magemuskel\w*|(?:inguinal )?hernia\w*|(?:lyske|navle)brokk\w*)\b/},
+  {name:"Tailbone symptoms", area:"pelvis", terms:/\b(?:coccydynia|tailbone\w*|coccyx|halebe[ni]+\w*)\b/},
+  {name:"Pelvic joint symptoms", area:"pelvis", terms:/\b(?:si joint|sacroiliac\w*|iliosakral\w*|bekkenleddsmerte\w*|bekkenlosning\w*)\b/},
+  {name:"Hip or groin muscle symptoms", area:"hip", terms:/\b(?:adductor\w*|adduktor\w*|hip flexor\w*|hofteboyer\w*|iliopsoas|lyskestrekk\w*|groin strain|gluteal tendin\w*|trochanter\w*|trokanter\w*|piriformis\w*)\b/},
+  {name:"Iliotibial band symptoms", area:"knee", terms:/\b(?:it band|itbs|iliotibial\w*|loperkne\w*|runners knee)\b/},
+  {name:"Kneecap symptoms", area:"knee", terms:/\b(?:patellofemoral\w*|kneskal\w*|kneecap\w*|chondromalacia\w*|kondromalasi\w*|osgood schlatter)\b/},
+  {name:"Meniscus injury", area:"knee", pause:true, terms:/\b(?:menis[ck]\w*)\b/},
+  {name:"Knee ligament injury", area:"knee", pause:true, terms:/\b(?:acl|pcl|mcl|lcl|korsband\w*|cruciate ligament|collateral ligament|sideband\w*)\b/},
+  {name:"Shin splints", area:"lowerLeg", terms:/\b(?:shin splints|medial tibial stress syndrome|beinhinnebetennelse\w*)\b/},
+  {name:"Stress fracture or bone stress injury", area:null, pause:true, terms:/\b(?:stress fractur\w*|stress reaction|stressreaksjon\w*|stressbrudd\w*|tretthetsbrudd\w*|marsjfraktur\w*)\b/},
+  {name:"High ankle sprain", area:"ankle", pause:true, terms:/\b(?:syndesmos\w*|high ankle sprain)\b/},
+  {name:"Plantar heel pain", area:"foot", terms:/\b(?:plantar\s*fasci\w*|heel spur\w*|halspore\w*|plantar heel pain)\b/},
+  {name:"Forefoot or toe symptoms", area:"foot", terms:/\b(?:turf toe|metatarsal\w*|mortons? neurom\w*|hallux\w*|bunion\w*|forfot\w*|storta\w*)\b/},
+  {name:"Midfoot injury", area:"foot", pause:true, terms:/\b(?:lisfranc\w*|navicular\w*)\b/},
+  {name:"Muscle strain", area:null, terms:/\b(?:muscle strain|pulled muscle|muskelstrekk\w*|strekk|forstrek\w*|strekte\w*)\b/},
+  {name:"Ligament sprain", area:null, terms:/\b(?:sprain\w*|forstu\w*|leddband\w*)\b/},
+  {name:"Bruise or impact injury", area:null, terms:/\b(?:bruise\w*|contusion\w*|blamerke\w*|kontusjon\w*|larskade\w*|larhone\w*)\b/},
+  {name:"Tendon or muscle tear", area:null, pause:true, terms:/\b(?:torn|tear\w*|ruptur\w*|avriv\w*|avrev\w*|avslit\w*|revet av|rok(?:et|ket|ne|net)?|snapped)\b/},
+  {name:"Bursitis symptoms", area:null, terms:/\b(?:bursitis|bursitt\w*|slimpose\w*)\b/},
+  {name:"Joint degeneration or arthritis", area:null, pause:true, terms:/\b(?:osteoarthritis|arthritis|artrose\w*|artritt\w*|leddgikt\w*)\b/},
+  {name:"Post-operative recovery", area:null, pause:true, terms:/\b(?:post operativ\w*|postop\w*|operasjon\w*|surgery|kirurgi\w*)\b/},
   {name:"Back of thigh / hamstring", area:"thigh", terms:/\b(?:hamstring\w*|(?:bakside\w*|bak pa) (?:av )?lar\w*|back of (?:the )?thigh)\b/},
   {name:"Front of thigh / quadriceps", area:"thigh", terms:/\b(?:quadriceps\w*|quads|(?:forside\w*|foran pa) (?:av )?lar\w*|front of (?:the )?thigh)\b/},
   {name:"Neck injury after trauma", area:"neck", pause:true, terms:/\b(?:whiplash|nakkesleng|nakkeskade\w*)\b/},
@@ -135,8 +175,8 @@ function readSymptoms(query) {
   if (!normalized) return {areas: query.trim() ? ["other"] : [], names: [], acute:false, urgent:false};
   const matches = [...conditionsFromReview, ...additionalConditions].filter(entry => entry.terms.test(normalized));
   const areas = new Set(matches.map(entry => entry.area).filter(Boolean));
-  const tattooLocation = /\b(?:underarm\w*|forearms?|overarm\w*|upper arms?|armen|arms?)\b/.test(normalized) ? "arm" :
-    /\b(?:lar\w*|thigh\w*|leg|legg\w*|foot|fot\w*)\b/.test(normalized) ? "leg" :
+  const tattooLocation = /\b(?:underarm\w*|forearms?|overarm\w*|upper arms?|armen|arms?|skulder\w*|shoulder\w*|hand(?:en)?|handledd\w*|wrist\w*|finger\w*)\b/.test(normalized) ? "arm" :
+    /\b(?:lar\w*|thigh\w*|leg|legg\w*|foot|fot\w*|kne\w*|ankel\w*|ankle\w*|toe\w*)\b/.test(normalized) ? "leg" :
     /\b(?:rygg\w*|back|chest|bryst\w*|abdomen|mage\w*)\b/.test(normalized) ? "torso" : "";
   for (const [area, pattern] of Object.entries(symptomPatterns)) {
     if (pattern.test(normalized)) areas.add(area);
@@ -158,6 +198,9 @@ function readSymptoms(query) {
     urgent: matches.some(entry => entry.urgent)
   };
 }
+
+// These areas can be found by search but need an individual exercise plan.
+const assessmentAreas = new Set(["head", "chest", "abdomen", "pelvis", "other"]);
 
 const restrictions = {
   grip: "Grep", squat: "Knebøy", load: "Belastning på beina", overhead: "Over hodet",
@@ -189,7 +232,7 @@ const filters = {
   neck: ["arm", "weighted", "bend", "overhead"], elbow: ["arm", "grip", "support"],
   hip: ["load", "leg", "bend"], lowerLeg: ["load", "leg"], thigh: ["load", "leg"],
   forearm: ["arm", "grip", "support"], upperArm: ["arm", "grip", "support", "overhead"],
-  arm: ["arm", "grip", "support", "overhead"]
+  arm: ["arm", "grip", "support", "overhead"], foot: ["load", "leg"], hand: ["grip", "support", "handMotion"]
 };
 const tattooFilters = {
   arm: ["grip", "support", "arm"], leg: ["load", "leg"], torso: ["bend", "torso", "weighted"],
@@ -203,7 +246,7 @@ const exercises = [
   {name:"Stående tåhev", tags:["load","leg"], dose:"6–10 reps", detail:"Løft hælene rolig med begge føtter på gulvet. Stå nær en vegg om du trenger balanse."},
   {name:"Sittende lett bicepscurl", tags:["grip","arm","weighted"], gear:"free", dose:"6–8 reps", detail:"Hold albuene ved siden av kroppen og velg en lett manual."},
   {name:"Knebøy med lette manualer langs siden", tags:["load","squat","leg","grip","arm","weighted"], gear:"free", returnOnly:true, dose:"5–8 reps", detail:"Bruk et bevegelsesutslag du allerede tåler og en lett belastning."},
-  {name:"Rolig håndåpning", tags:["arm"], dose:"6–8 reps", detail:"Sitt med avslappede skuldre. Åpne og lukk hånden rolig."}
+  {name:"Rolig håndåpning", tags:["arm","handMotion"], dose:"6–8 reps", detail:"Sitt med avslappede skuldre. Åpne og lukk hånden rolig."}
 ];
 
 const armBend = {name:"Unloaded elbow bends", tags:["arm"], dose:"2–3 reps", detail:"With your upper arm resting by your side, slowly bend and straighten the elbow within a comfortable range."};
@@ -217,6 +260,7 @@ const tattooWorkout = [
 ];
 
 const rehabExercises = {
+  hand: [exercises.find(item => item.tags.includes("handMotion"))],
   forearm: [{name:"Palm-up and palm-down turns", tags:["arm"], dose:"2–3 each way", detail:"Keep the elbow beside you and bent. Slowly rotate the forearm so the palm faces up, then down."}],
   upperArm: [armBend],
   arm: [armBend],
@@ -261,7 +305,10 @@ function plan({areas, names = [], acute, blocked, phase, location, gear, alert, 
   };
   if (!areas.length) return {message:"Describe what you need to protect", detail:"Enter a symptom, injury or other reason to adapt your workout."};
   if (hold) return {message:"Vent med å lage økt", detail:"Følg restriksjonene du har fått fra behandler eller tatovør."};
-  if (areas.includes("other")) return {message:"Bruk opplegget fra behandleren", detail:"En annen skade trenger konkrete rammer for hva som kan belastes. Legg inn en støttet kategori hvis den beskriver skaden din."};
+  if (areas.some(area => assessmentAreas.has(area))) return {
+    message:"Individual activity advice needed",
+    detail:"Ask a clinician which movements and loads fit your situation before using a workout plan."
+  };
   if (injury && phase === "early") return {message:"Avvent en treningsøkt", detail:"Ved fersk skade må valg av aktivitet ta hensyn til hva som har skjedd og hva du kan belaste. Følg råd fra behandleren."};
   const excluded = new Set([...blocked, ...areas.flatMap(area =>
     area === "tattoo" ? tattooFilters[location] : filters[area])]);
@@ -306,7 +353,7 @@ function renderPlan() {
   const result = byId("result");
   const selection = plan({areas, names, acute, phase, tattooReady:byId("tattooReady").checked, blocked:selected("restrictions"), location:byId("location").value,
     gear:byId("gear").value, alert:urgent || byId("alert").checked, hold:byId("hold").checked});
-  const labels = names.length ? names : areas.filter(area => area !== "other").map(area => t(conditions[area]));
+  const labels = [...new Set([...names, ...areas.filter(area => area !== "other").map(area => t(conditions[area]))])];
   const matched = labels.length ? `<p class="meta">Matched search terms: ${labels.join(" · ")}</p>` :
     `<p class="meta">No specific search match</p>`;
   if (selection.message) {
