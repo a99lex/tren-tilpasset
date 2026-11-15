@@ -1,75 +1,9 @@
-const englishCopy = {
-  "Tatovering": "Tattoo",
-  "Rygg": "Back",
-  "Kne": "Knee",
-  "Skulder": "Shoulder",
-  "Ankel / fot": "Ankle / foot",
-  "Håndledd": "Wrist",
-  "Annen skade": "Other injury",
-  "Grep": "Gripping",
-  "Knebøy": "Squats",
-  "Belastning på beina": "Weight on the legs",
-  "Over hodet": "Overhead movements",
-  "Støtte på hendene": "Weight on the hands",
-  "Bøy / vridning i rygg": "Bending / twisting the back",
-  "Fersk / akutt": "Recent / acute",
-  "Opptrening": "Rehabilitation",
-  "Tilbake til trening": "Return to training",
-  "Rolig gange på flatt underlag": "Easy walk on level ground",
-  "Gå i et tempo der du kan snakke uanstrengt.": "Walk at a pace where you can comfortably hold a conversation.",
-  "Rolige skulderbladbevegelser": "Gentle shoulder blade squeezes",
-  "Sitt eller stå med armene avslappet. Før skulderbladene forsiktig sammen og slipp.": "Sit or stand with your arms relaxed. Gently bring your shoulder blades together and release.",
-  "Sett deg og reis deg fra en stol": "Sit-to-stand",
-  "Bruk en stabil stol og hold armene avslappet. Beveg deg rolig.": "Use a stable chair, relax your arms and move slowly.",
-  "Stående tåhev": "Standing calf raises",
-  "Løft hælene rolig med begge føtter på gulvet. Stå nær en vegg om du trenger balanse.": "Slowly raise your heels with both feet on the floor. Stand near a wall if you need balance.",
-  "Sittende lett bicepscurl": "Seated light biceps curl",
-  "Hold albuene ved siden av kroppen og velg en lett manual.": "Keep your elbows by your sides and use a light dumbbell.",
-  "Knebøy med lette manualer langs siden": "Squat with light dumbbells at your sides",
-  "Bruk et bevegelsesutslag du allerede tåler og en lett belastning.": "Use a light load and a range of motion you already tolerate.",
-  "Rolig håndåpning": "Gentle hand opening",
-  "Sitt med avslappede skuldre. Åpne og lukk hånden rolig.": "Sit with your shoulders relaxed. Slowly open and close your hand.",
-  "Sett treningen på pause": "Pause your workout",
-  "Kontakt legevakt på 116 117 hvis det haster. Ved akutt alvorlige symptomer, ring 113.": "Seek urgent medical care. For severe or rapidly worsening symptoms, call your local emergency number.",
-  "Vent med å lage økt": "Wait before planning a workout",
-  "Følg restriksjonene du har fått fra behandler eller tatovør.": "Follow the restrictions from your clinician or tattoo artist.",
-  "Bruk opplegget fra behandleren": "Follow your clinician’s plan",
-  "En annen skade trenger konkrete rammer for hva som kan belastes. Legg inn en støttet kategori hvis den beskriver skaden din.": "This description needs more specific guidance on which movements and loads are appropriate. Follow your clinician’s exercise plan.",
-  "Avvent en treningsøkt": "Hold off on a workout",
-  "Ved fersk skade må valg av aktivitet ta hensyn til hva som har skjedd og hva du kan belaste. Følg råd fra behandleren.": "After a recent injury, follow your clinician’s activity advice. If you’re already doing rehabilitation, select that stage to see the available movements.",
-  "Vent med en strukturert økt": "Hold off on a structured workout",
-  "Følg etterbehandlingen fra tatovøren. Unngå friksjon og trykk på tatoveringen mens den gror.": "Follow your tattoo artist’s aftercare advice. Avoid friction and pressure on the tattoo while it heals.",
-  "Ingen øvelser i dette utvalget": "No matching exercises",
-  "Øvelsene i appen passer ikke med kombinasjonen du valgte.": "Your current movement restrictions leave no suitable exercises in this plan. Check your selections or follow the exercises your clinician gave you.",
-  "2 sett": "2 sets",
-  "1 sett": "1 set",
-  "Rolig aktivitet": "Gentle activity",
-  "Lett treningsøkt": "Light workout",
-  "Rolig økt": "Easy workout",
-  "Generell økt": "General workout",
-  " Unngå trykk og gnissing på tatoveringen, og følg rådene fra tatovøren.": " Avoid pressure and rubbing on your tattoo and follow your tattoo artist’s advice.",
-  "Hvis etterbehandlingen tillater det, kan du ta en kort, rolig gåtur.": "If your aftercare instructions allow it, you can take a short, easy walk.",
-  "Start lett. Stopp hvis symptomene øker under økten, og sjekk hvordan kroppen reagerer etterpå og neste dag.": "Start gently. Stop if symptoms increase during exercise and check how you feel afterwards and the next day.",
-  "Hvordan gikk økten?": "How did the workout go?",
-  "Velg respons": "Choose a response",
-  "Gikk fint": "Went well",
-  "Ubehag": "Discomfort",
-  "Stoppet økten": "Stopped the workout",
-  "Lagre i loggen": "Save to log",
-  "Økten er lagret.": "Workout saved.",
-  "Kunne ikke lagre økten på denne enheten.": "Could not save the workout on this device.",
-  "Ingen registrerte økter ennå.": "No workouts logged yet.",
-  "Slett økt": "Delete workout",
-  "Kunne ikke slette": "Could not delete",
-  "Øktforslag": "Suggested workout",
-};
-const t = value => englishCopy[value] ?? value;
 const byId = id => document.getElementById(id);
 const conditions = {
   tattoo: "Tatovering", back: "Rygg", knee: "Kne", shoulder: "Skulder",
-  ankle: "Ankle / Achilles", foot: "Foot / toes", wrist: "Håndledd", hand: "Hand / fingers",
-  head: "Head / face", chest: "Chest / ribs", abdomen: "Abdomen", pelvis: "Pelvis / tailbone",
-  neck: "Neck", elbow: "Elbow", forearm: "Forearm", upperArm: "Upper arm", arm: "Arm", thigh: "Thigh", hip: "Hip / groin", lowerLeg: "Lower leg", other: "Annen skade"
+  ankle: "Ankel / akilles", foot: "Fot / tær", wrist: "Håndledd", hand: "Hånd / fingre",
+  head: "Hode / ansikt", chest: "Bryst / ribbein", abdomen: "Mage", pelvis: "Bekken / halebein",
+  neck: "Nakke", elbow: "Albue", forearm: "Underarm", upperArm: "Overarm", arm: "Arm", thigh: "Lår", hip: "Hofte / lyske", lowerLeg: "Legg", other: "Annen skade"
 };
 const symptomPatterns = {
   tattoo: /\b(?:tattoo\w*|tatover\w*|tattover\w*|tattver\w*)\b/,
@@ -100,78 +34,79 @@ const normalize = value => value.toLowerCase().normalize("NFD")
 
 // FHI's 2005 review supplies terminology. The exercise filters are independent.
 const conditionsFromReview = [
-  {name:"Low back pain", area:"back", terms:/\b(?:low(?:er)? back pain|lumbago|korsryg\w*|ryggsmerter)\b/},
-  {name:"Herniated disc", area:"back", pause:true, terms:/\b(?:(?:herniated|slipped|prolapsed|bulging) dis[ck]|dis[ck] herniation|(?:skive)?prolaps\w*)\b/},
-  {name:"Neck pain", area:"neck", terms:/\b(?:neck pain|sore neck|stiff neck|nakke\w*|vond nakke|cervicalgia)\b/},
-  {name:"Nerve root symptoms", area:"neck", pause:true, terms:/\b(?:cervical radiculopathy|cervical nerve root|nerverot\w*|rotkompresjon\w*)\b/},
-  {name:"Shoulder pain", area:"shoulder", terms:/\b(?:shoulder pain|sore shoulder|skuldersmerte\w*|vond skulder)\b/},
-  {name:"Ankle injury", area:"ankle", terms:/\b(?:ankle (?:injury|sprain)|sprained ankle|ankelskade\w*|overtrakk\w*|forstu\w* ankel)\b/},
-  {name:"Tennis elbow", area:"elbow", terms:/\b(?:tennis elbow|tennisalbue\w*|lateral epicondyl\w*|lateral epikondyl\w*)\b/},
-  {name:"Tendon pain", area:null, terms:/\b(?:tendin\w*|tendonitis|senebetennelse\w*|seneplage\w*)\b/},
-  {name:"Myofascial pain", area:null, terms:/\b(?:myofascial\w*|trigger ?point\w*|trigger ?punkt\w*|muskelknute\w*)\b/},
-  {name:"Headache", area:null, pause:true, terms:/\b(?:headache\w*|hodepine\w*|spenningshodepine\w*|stresshodepine\w*|tensjonshodepine\w*|migren\w*)\b/},
-  {name:"Jaw joint symptoms", area:null, pause:true, terms:/\b(?:tmj|tmd|temporomandibular\w*|kjeveledd\w*|costen\w*)\b/},
-  {name:"Fibromyalgia", area:null, pause:true, terms:/\b(?:fibromyalg\w*)\b/},
-  {name:"Hip replacement", area:null, pause:true, terms:/\b(?:hip replacement|hip surgery|hofteoper\w*|hofteprotes\w*)\b/},
-  {name:"Soft tissue injury", area:null, terms:/\b(?:soft tissue (?:injury|damage)|blotvevsskade\w*|blotdelsskade\w*)\b/},
-  {name:"Osteoporosis", area:null, pause:true, terms:/\b(?:osteoporos\w*|beinskjor\w*|benskjor\w*)\b/},
-  {name:"Fracture or dislocation", area:null, pause:true, terms:/\b(?:fractur\w*|fraktur\w*|brudd\w*|benbrudd\w*|beinbrudd\w*|broken|dislocat\w*|dislok\w*|luksasj\w*|subluks\w*|sublux\w*|ute av ledd)\b/},
-  {name:"Spinal cord or cauda equina symptoms", area:null, urgent:true, terms:/\b(?:caud[ai] equina|spinal cord (?:injur\w*|compress\w*)|ryggmargsskade\w*|ryggmargskompresj\w*)\b/},
-  {name:"Stroke or arterial injury", area:null, urgent:true, terms:/\b(?:stroke|hjerneslag\w*|arteriedisseksj\w*|arter\w* dissection|wallenberg\w*|epidural\w* (?:hematom\w*|haematom\w*))\b/},
-  {name:"Blood clot or bleeding disorder", area:null, pause:true, terms:/\b(?:venetrombos\w*|trombos\w*|thrombosis|blood clot|blodpropp\w*|blodningsforstyr\w*|bleeding disorder)\b/},
-  {name:"Cervical spinal injury", area:null, pause:true, terms:/\b(?:odontoid\w*|atlanto[ -]?axial\w*|vertebraskade\w*|nakkebrudd\w*|cervical spine injury)\b/},
-  {name:"Post-traumatic headache", area:null, pause:true, terms:/\b(?:post ?traumatic headache|posttraumatisk hodepine)\b/},
-  {name:"Exercise-related muscle soreness", area:null, terms:/\b(?:muskelstol\w*|treningsverk|muscle soreness|doms)\b/},
-  {name:"Skin injury or infection", area:null, pause:true, terms:/\b(?:brannsar\w*|burn injury|skin infection|hudinfeksj\w*|open wound|apne? sar|eksem\w*|eczema)\b/}
+  {name:"Korsryggsmerter", area:"back", terms:/\b(?:low(?:er)? back pain|lumbago|korsryg\w*|ryggsmerter)\b/},
+  {name:"Skiveprolaps", area:"back", pause:true, terms:/\b(?:(?:herniated|slipped|prolapsed|bulging) dis[ck]|dis[ck] herniation|(?:skive)?prolaps\w*)\b/},
+  {name:"Nakkesmerter", area:"neck", terms:/\b(?:neck pain|sore neck|stiff neck|nakke\w*|vond nakke|cervicalgia)\b/},
+  {name:"Nerverotplager", area:"neck", pause:true, terms:/\b(?:cervical radiculopathy|cervical nerve root|nerverot\w*|rotkompresjon\w*)\b/},
+  {name:"Skuldersmerter", area:"shoulder", terms:/\b(?:shoulder pain|sore shoulder|skuldersmerte\w*|vond skulder)\b/},
+  {name:"Ankelskade", area:"ankle", terms:/\b(?:ankle (?:injury|sprain)|sprained ankle|ankelskade\w*|overtrakk\w*|forstu\w* ankel)\b/},
+  {name:"Tennisalbue", area:"elbow", terms:/\b(?:tennis elbow|tennisalbue\w*|lateral epicondyl\w*|lateral epikondyl\w*)\b/},
+  {name:"Seneplager", area:null, terms:/\b(?:tendin\w*|tendonitis|senebetennelse\w*|seneplage\w*)\b/},
+  {name:"Myofasciale smerter", area:null, terms:/\b(?:myofascial\w*|trigger ?point\w*|trigger ?punkt\w*|muskelknute\w*)\b/},
+  {name:"Hodepine", area:null, pause:true, terms:/\b(?:headache\w*|hodepine\w*|spenningshodepine\w*|stresshodepine\w*|tensjonshodepine\w*|migren\w*)\b/},
+  {name:"Kjeveleddsplager", area:null, pause:true, terms:/\b(?:tmj|tmd|temporomandibular\w*|kjeveledd\w*|costen\w*)\b/},
+  {name:"Fibromyalgi", area:null, pause:true, terms:/\b(?:fibromyalg\w*)\b/},
+  {name:"Hofteprotese", area:null, pause:true, terms:/\b(?:hip replacement|hip surgery|hofteoper\w*|hofteprotes\w*)\b/},
+  {name:"Bløtvevsskade", area:null, terms:/\b(?:soft tissue (?:injury|damage)|blotvevsskade\w*|blotdelsskade\w*)\b/},
+  {name:"Beinskjørhet", area:null, pause:true, terms:/\b(?:osteoporos\w*|beinskjor\w*|benskjor\w*)\b/},
+  {name:"Brudd eller ledd ute av stilling", area:null, pause:true, terms:/\b(?:fractur\w*|fraktur\w*|brudd\w*|benbrudd\w*|beinbrudd\w*|broken|dislocat\w*|dislok\w*|luksasj\w*|subluks\w*|sublux\w*|ute av ledd)\b/},
+  {name:"Ryggmargs- eller cauda equina-symptomer", area:null, urgent:true, terms:/\b(?:caud[ai] equina|spinal cord (?:injur\w*|compress\w*)|ryggmargsskade\w*|ryggmargskompresj\w*)\b/},
+  {name:"Hjerneslag eller karskade", area:null, urgent:true, terms:/\b(?:stroke|hjerneslag\w*|arteriedisseksj\w*|arter\w* dissection|wallenberg\w*|epidural\w* (?:hematom\w*|haematom\w*))\b/},
+  {name:"Blodpropp eller blødningsforstyrrelse", area:null, pause:true, terms:/\b(?:venetrombos\w*|trombos\w*|thrombosis|blood clot|blodpropp\w*|blodningsforstyr\w*|bleeding disorder)\b/},
+  {name:"Skade i nakkevirvlene", area:null, pause:true, terms:/\b(?:odontoid\w*|atlanto[ -]?axial\w*|vertebraskade\w*|nakkebrudd\w*|cervical spine injury)\b/},
+  {name:"Hodepine etter skade", area:null, pause:true, terms:/\b(?:post ?traumatic headache|posttraumatisk hodepine)\b/},
+  {name:"Treningsstølhet", area:null, terms:/\b(?:muskelstol\w*|treningsverk|muscle soreness|doms)\b/},
+  {name:"Hudskade eller infeksjon", area:null, pause:true, terms:/\b(?:brannsar\w*|burn injury|skin infection|hudinfeksj\w*|open wound|apne? sar|eksem\w*|eczema)\b/}
 ];
 
 const additionalConditions = [
-  {name:"Concussion or head injury", area:"head", pause:true, terms:/\b(?:concussion\w*|head injur\w*|head trauma|hjerneryst\w*|hodeskade\w*|slag mot hodet|slo hodet)\b/},
-  {name:"Facial or eye injury", area:"head", pause:true, terms:/\b(?:facial injur\w*|eye injur\w*|ansiktsskade\w*|oyeskade\w*|nesebrudd\w*)\b/},
-  {name:"Clavicle injury", area:"shoulder", terms:/\b(?:clavicl\w*|collar\s*bone\w*|kragebein\w*|krageben\w*)\b/},
-  {name:"AC joint injury", area:"shoulder", pause:true, terms:/\b(?:ac joint|ac ledd\w*|acromioclavicular\w*)\b/},
-  {name:"Rotator cuff symptoms", area:"shoulder", terms:/\b(?:rotator\s*cuff\w*|subacromial\w*|subakromial\w*|shoulder impingement|supraspinatus)\b/},
-  {name:"Labrum injury", area:null, pause:true, terms:/\b(?:labrum\w*|labral\w*|slap (?:tear|lesion|skade))\b/},
-  {name:"Biceps or triceps symptoms", area:"upperArm", terms:/\b(?:biceps\w*|triceps\w*)\b/},
-  {name:"Carpal tunnel symptoms", area:"wrist", terms:/\b(?:carpal tunnel|karpaltunnel\w*)\b/},
-  {name:"Thumb-side wrist symptoms", area:"wrist", terms:/\b(?:de quervain\w*|quervain\w*)\b/},
-  {name:"Thumb or finger injury", area:"hand", pause:true, terms:/\b(?:skier'?s thumb|gamekeeper'?s thumb|skitommel\w*|mallet finger|droppfinger\w*|jersey finger|triggerfinger\w*|trigger finger)\b/},
-  {name:"Wrist injury requiring assessment", area:"wrist", pause:true, terms:/\b(?:tfcc|scapholunate\w*|skafoid\w*|scaphoid\w*|batbein\w*|batben\w*)\b/},
-  {name:"Rib or chest injury", area:"chest", terms:/\b(?:rib\w*|sternum|brystbein\w*|brystben\w*|intercostal\w*|mellomribb\w*)\b/},
-  {name:"Abdominal wall injury", area:"abdomen", terms:/\b(?:abdominal strain|bukvegg\w*|magemuskel\w*|(?:inguinal )?hernia\w*|(?:lyske|navle)brokk\w*)\b/},
-  {name:"Tailbone symptoms", area:"pelvis", terms:/\b(?:coccydynia|tailbone\w*|coccyx|halebe[ni]+\w*)\b/},
-  {name:"Pelvic joint symptoms", area:"pelvis", terms:/\b(?:si joint|sacroiliac\w*|iliosakral\w*|bekkenleddsmerte\w*|bekkenlosning\w*)\b/},
-  {name:"Hip or groin muscle symptoms", area:"hip", terms:/\b(?:adductor\w*|adduktor\w*|hip flexor\w*|hofteboyer\w*|iliopsoas|lyskestrekk\w*|groin strain|gluteal tendin\w*|trochanter\w*|trokanter\w*|piriformis\w*)\b/},
-  {name:"Iliotibial band symptoms", area:"knee", terms:/\b(?:it band|itbs|iliotibial\w*|loperkne\w*|runners knee)\b/},
-  {name:"Kneecap symptoms", area:"knee", terms:/\b(?:patellofemoral\w*|kneskal\w*|kneecap\w*|chondromalacia\w*|kondromalasi\w*|osgood schlatter)\b/},
-  {name:"Meniscus injury", area:"knee", pause:true, terms:/\b(?:menis[ck]\w*)\b/},
-  {name:"Knee ligament injury", area:"knee", pause:true, terms:/\b(?:acl|pcl|mcl|lcl|korsband\w*|cruciate ligament|collateral ligament|sideband\w*)\b/},
-  {name:"Shin splints", area:"lowerLeg", terms:/\b(?:shin splints|medial tibial stress syndrome|beinhinnebetennelse\w*)\b/},
-  {name:"Stress fracture or bone stress injury", area:null, pause:true, terms:/\b(?:stress fractur\w*|stress reaction|stressreaksjon\w*|stressbrudd\w*|tretthetsbrudd\w*|marsjfraktur\w*)\b/},
-  {name:"High ankle sprain", area:"ankle", pause:true, terms:/\b(?:syndesmos\w*|high ankle sprain)\b/},
-  {name:"Plantar heel pain", area:"foot", terms:/\b(?:plantar\s*fasci\w*|heel spur\w*|halspore\w*|plantar heel pain)\b/},
-  {name:"Forefoot or toe symptoms", area:"foot", terms:/\b(?:turf toe|metatarsal\w*|mortons? neurom\w*|hallux\w*|bunion\w*|forfot\w*|storta\w*)\b/},
-  {name:"Midfoot injury", area:"foot", pause:true, terms:/\b(?:lisfranc\w*|navicular\w*)\b/},
-  {name:"Muscle strain", area:null, terms:/\b(?:muscle strain|pulled muscle|muskelstrekk\w*|strekk|forstrek\w*|strekte\w*)\b/},
-  {name:"Ligament sprain", area:null, terms:/\b(?:sprain\w*|forstu\w*|leddband\w*)\b/},
-  {name:"Bruise or impact injury", area:null, terms:/\b(?:bruise\w*|contusion\w*|blamerke\w*|kontusjon\w*|larskade\w*|larhone\w*)\b/},
-  {name:"Tendon or muscle tear", area:null, pause:true, terms:/\b(?:torn|tear\w*|ruptur\w*|avriv\w*|avrev\w*|avslit\w*|revet av|rok(?:et|ket|ne|net)?|snapped)\b/},
-  {name:"Bursitis symptoms", area:null, terms:/\b(?:bursitis|bursitt\w*|slimpose\w*)\b/},
-  {name:"Joint degeneration or arthritis", area:null, pause:true, terms:/\b(?:osteoarthritis|arthritis|artrose\w*|artritt\w*|leddgikt\w*)\b/},
-  {name:"Post-operative recovery", area:null, pause:true, terms:/\b(?:post operativ\w*|postop\w*|operasjon\w*|surgery|kirurgi\w*)\b/},
-  {name:"Back of thigh / hamstring", area:"thigh", terms:/\b(?:hamstring\w*|(?:bakside\w*|bak pa) (?:av )?lar\w*|back of (?:the )?thigh)\b/},
-  {name:"Front of thigh / quadriceps", area:"thigh", terms:/\b(?:quadriceps\w*|quads|(?:forside\w*|foran pa) (?:av )?lar\w*|front of (?:the )?thigh)\b/},
-  {name:"Neck injury after trauma", area:"neck", pause:true, terms:/\b(?:whiplash|nakkesleng|nakkeskade\w*)\b/},
-  {name:"Calf or shin injury", area:"lowerLeg", terms:/\b(?:calf|shin\w*|legg\w*|beinhinne\w*)\b/},
-  {name:"Jumper’s knee", area:"knee", terms:/\b(?:jumpers? knee|jumpere knee|hopperkne\w*|patellar tendin\w*|patellartendin\w*)\b/},
-  {name:"Achilles tendon symptoms", area:"ankle", terms:/\b(?:achil{1,2}es\w*|ak{1,2}il{1,2}es\w*)\b/},
-  {name:"Sciatica", area:"back", terms:/\b(?:sciatic\w*|isjias\w*)\b/},
-  {name:"Frozen shoulder", area:"shoulder", terms:/\b(?:frozen shoulder|frossen skulder)\b/},
-  {name:"Golfer’s elbow", area:"elbow", terms:/\b(?:golfers? elbow|golfalbue\w*|medial epi[ck]ondyl\w*)\b/}
+  {name:"Hjernerystelse eller hodeskade", area:"head", pause:true, terms:/\b(?:concussion\w*|head injur\w*|head trauma|hjerneryst\w*|hodeskade\w*|slag mot hodet|slo hodet)\b/},
+  {name:"Ansikts- eller øyeskade", area:"head", pause:true, terms:/\b(?:facial injur\w*|eye injur\w*|ansiktsskade\w*|oyeskade\w*|nesebrudd\w*)\b/},
+  {name:"Kragebeinsskade", area:"shoulder", terms:/\b(?:clavicl\w*|collar\s*bone\w*|kragebein\w*|krageben\w*)\b/},
+  {name:"Skade i AC-leddet", area:"shoulder", pause:true, terms:/\b(?:ac joint|ac ledd\w*|acromioclavicular\w*)\b/},
+  {name:"Rotatorcuffplager", area:"shoulder", terms:/\b(?:rotator\s*cuff\w*|subacromial\w*|subakromial\w*|shoulder impingement|supraspinatus)\b/},
+  {name:"Labrumskade", area:null, pause:true, terms:/\b(?:labrum\w*|labral\w*|slap (?:tear|lesion|skade))\b/},
+  {name:"Biceps- eller tricepsplager", area:"upperArm", terms:/\b(?:biceps\w*|triceps\w*)\b/},
+  {name:"Karpaltunnelplager", area:"wrist", terms:/\b(?:carpal tunnel|karpaltunnel\w*)\b/},
+  {name:"Plager på tommelsiden av håndleddet", area:"wrist", terms:/\b(?:de quervain\w*|quervain\w*)\b/},
+  {name:"Tommel- eller fingerskade", area:"hand", pause:true, terms:/\b(?:skier'?s thumb|gamekeeper'?s thumb|skitommel\w*|mallet finger|droppfinger\w*|jersey finger|triggerfinger\w*|trigger finger)\b/},
+  {name:"Håndleddsskade som bør vurderes", area:"wrist", pause:true, terms:/\b(?:tfcc|scapholunate\w*|skafoid\w*|scaphoid\w*|batbein\w*|batben\w*)\b/},
+  {name:"Ribbeins- eller brystskade", area:"chest", terms:/\b(?:rib\w*|sternum|brystbein\w*|brystben\w*|intercostal\w*|mellomribb\w*)\b/},
+  {name:"Bukveggsskade", area:"abdomen", terms:/\b(?:abdominal strain|bukvegg\w*|magemuskel\w*|(?:inguinal )?hernia\w*|(?:lyske|navle)brokk\w*)\b/},
+  {name:"Halebeinsplager", area:"pelvis", terms:/\b(?:coccydynia|tailbone\w*|coccyx|halebe[ni]+\w*)\b/},
+  {name:"Bekkenleddsplager", area:"pelvis", terms:/\b(?:si joint|sacroiliac\w*|iliosakral\w*|bekkenleddsmerte\w*|bekkenlosning\w*)\b/},
+  {name:"Muskelplager i hofte eller lyske", area:"hip", terms:/\b(?:adductor\w*|adduktor\w*|hip flexor\w*|hofteboyer\w*|iliopsoas|lyskestrekk\w*|groin strain|gluteal tendin\w*|trochanter\w*|trokanter\w*|piriformis\w*)\b/},
+  {name:"Løperkne", area:"knee", terms:/\b(?:it band|itbs|iliotibial\w*|loperkne\w*|runners knee)\b/},
+  {name:"Plager rundt kneskålen", area:"knee", terms:/\b(?:patellofemoral\w*|kneskal\w*|kneecap\w*|chondromalacia\w*|kondromalasi\w*|osgood schlatter)\b/},
+  {name:"Meniskskade", area:"knee", pause:true, terms:/\b(?:menis[ck]\w*)\b/},
+  {name:"Leddbåndsskade i kneet", area:"knee", pause:true, terms:/\b(?:acl|pcl|mcl|lcl|korsband\w*|cruciate ligament|collateral ligament|sideband\w*)\b/},
+  {name:"Beinhinneplager", area:"lowerLeg", terms:/\b(?:shin splints|medial tibial stress syndrome|beinhinnebetennelse\w*)\b/},
+  {name:"Stressbrudd eller stressreaksjon i bein", area:null, pause:true, terms:/\b(?:stress fractur\w*|stress reaction|stressreaksjon\w*|stressbrudd\w*|tretthetsbrudd\w*|marsjfraktur\w*)\b/},
+  {name:"Høy ankelforstuing", area:"ankle", pause:true, terms:/\b(?:syndesmos\w*|high ankle sprain)\b/},
+  {name:"Smerter under hælen", area:"foot", terms:/\b(?:plantar\s*fasci\w*|heel spur\w*|halspore\w*|plantar heel pain)\b/},
+  {name:"Plager i forfot eller tær", area:"foot", terms:/\b(?:turf toe|metatarsal\w*|mortons? neurom\w*|hallux\w*|bunion\w*|forfot\w*|storta\w*)\b/},
+  {name:"Skade i mellomfoten", area:"foot", pause:true, terms:/\b(?:lisfranc\w*|navicular\w*)\b/},
+  {name:"Muskelstrekk", area:null, terms:/\b(?:muscle strain|pulled muscle|muskelstrekk\w*|strekk|forstrek\w*|strekte\w*)\b/},
+  {name:"Forstuing", area:null, terms:/\b(?:sprain\w*|forstu\w*|leddband\w*)\b/},
+  {name:"Slagskade eller blåmerke", area:null, terms:/\b(?:bruise\w*|contusion\w*|blamerke\w*|kontusjon\w*|larskade\w*|larhone\w*)\b/},
+  {name:"Sene- eller muskelruptur", area:null, pause:true, terms:/\b(?:torn|tear\w*|ruptur\w*|avriv\w*|avrev\w*|avslit\w*|revet av|rok(?:et|ket|ne|net)?|snapped)\b/},
+  {name:"Slimposeplager", area:null, terms:/\b(?:bursitis|bursitt\w*|slimpose\w*)\b/},
+  {name:"Artrose eller leddbetennelse", area:null, pause:true, terms:/\b(?:osteoarthritis|arthritis|artrose\w*|artritt\w*|leddgikt\w*)\b/},
+  {name:"Opptrening etter operasjon", area:null, pause:true, terms:/\b(?:post operativ\w*|postop\w*|operasjon\w*|surgery|kirurgi\w*)\b/},
+  {name:"Bakside lår / hamstring", area:"thigh", terms:/\b(?:hamstring\w*|(?:bakside\w*|bak pa) (?:av )?lar\w*|back of (?:the )?thigh)\b/},
+  {name:"Forside lår / quadriceps", area:"thigh", terms:/\b(?:quadriceps\w*|quads|(?:forside\w*|foran pa) (?:av )?lar\w*|front of (?:the )?thigh)\b/},
+  {name:"Nakkeskade etter ulykke", area:"neck", pause:true, terms:/\b(?:whiplash|nakkesleng|nakkeskade\w*)\b/},
+  {name:"Leggplager", area:"lowerLeg", terms:/\b(?:calf|shin\w*|legg\w*|beinhinne\w*)\b/},
+  {name:"Hopperkne", area:"knee", terms:/\b(?:jumpers? knee|jumpere knee|hopperkne\w*|patellar tendin\w*|patellartendin\w*)\b/},
+  {name:"Akillesplager", area:"ankle", terms:/\b(?:achil{1,2}es\w*|ak{1,2}il{1,2}es\w*)\b/},
+  {name:"Isjias", area:"back", terms:/\b(?:sciatic\w*|isjias\w*)\b/},
+  {name:"Frossen skulder", area:"shoulder", terms:/\b(?:frozen shoulder|frossen skulder)\b/},
+  {name:"Golfalbue", area:"elbow", terms:/\b(?:golfers? elbow|golfalbue\w*|medial epi[ck]ondyl\w*)\b/}
 ];
 
 function readSymptoms(query) {
   const normalized = normalize(query);
+  if (["ingen skade", "ingen plager", "no injury"].includes(normalized)) return {areas:[], names:[], healthy:true};
   if (!normalized) return {areas: query.trim() ? ["other"] : [], names: [], acute:false, urgent:false};
   const matches = [...conditionsFromReview, ...additionalConditions].filter(entry => entry.terms.test(normalized));
   const areas = new Set(matches.map(entry => entry.area).filter(Boolean));
@@ -204,22 +139,28 @@ const assessmentAreas = new Set(["head", "chest", "abdomen", "pelvis", "other"])
 
 const restrictions = {
   grip: "Grep", squat: "Knebøy", load: "Belastning på beina", overhead: "Over hodet",
-  support: "Støtte på hendene", bend: "Bøy / vridning i rygg", neckTurn: "Moving the neck"
+  support: "Støtte på hendene", bend: "Bøy / vridning i rygg", neckTurn: "Bevegelse av nakken"
 };
-const phases = { early: "Fersk / akutt", recovery: "Opptrening", return: "Tilbake til trening" };
+const phases = { early: "Fersk / akutt", recovery: "Opptrening", return: "Tilbake til trening", normal: "Vanlig trening" };
 
 const symptomSearch = byId("symptomSearch");
 const guide = new URLSearchParams(location.search).get("guide");
-if (guide === "knee") symptomSearch.value = "Jumper’s knee";
-if (guide === "tattoo") symptomSearch.value = "New tattoo";
+if (guide === "knee") symptomSearch.value = "Hopperkne";
+if (guide === "tattoo") symptomSearch.value = "Ny tatovering";
 
 byId("restrictions").innerHTML = Object.entries(restrictions).map(([key, label]) =>
-  `<label><input type="checkbox" value="${key}"><span>${t(label)}</span></label>`
+  `<label><input type="checkbox" value="${key}"><span>${label}</span></label>`
 ).join("");
 const selected = id => [...byId(id).querySelectorAll(":checked")].map(input => input.value);
 
 function updateSymptomFields() {
   const symptoms = readSymptoms(symptomSearch.value);
+  const phase = byId("phase");
+  phase.hidden = Boolean(symptoms.healthy);
+  byId("phaseLabel").hidden = phase.hidden;
+  phase.required = !phase.hidden;
+  if (symptoms.healthy) phase.value = "normal";
+  else if (phase.value === "normal") phase.value = "";
   const tattoo = symptoms.areas.includes("tattoo");
   byId("locationField").hidden = !tattoo;
   byId("tattooReadyField").hidden = !tattoo || byId("phase").value !== "early" || byId("location").value !== "arm";
@@ -227,7 +168,7 @@ function updateSymptomFields() {
 updateSymptomFields();
 
 const filters = {
-  back: ["bend", "weighted"], knee: ["load"], ankle: ["load"],
+  back: ["bend", "weighted"], knee: ["load", "leg"], ankle: ["load", "leg"],
   shoulder: ["grip", "overhead", "support", "arm"], wrist: ["grip", "support", "arm"],
   neck: ["arm", "weighted", "bend", "overhead"], elbow: ["arm", "grip", "support"],
   hip: ["load", "leg", "bend"], lowerLeg: ["load", "leg"], thigh: ["load", "leg"],
@@ -241,73 +182,117 @@ const tattooFilters = {
 
 const exercises = [
   {name:"Rolig gange på flatt underlag", tags:["load"], dose:"3–5 min", detail:"Gå i et tempo der du kan snakke uanstrengt."},
-  {name:"Rolige skulderbladbevegelser", tags:["arm"], dose:"6–8 reps", detail:"Sitt eller stå med armene avslappet. Før skulderbladene forsiktig sammen og slipp."},
-  {name:"Sett deg og reis deg fra en stol", tags:["load","squat","leg"], dose:"5–8 reps", detail:"Bruk en stabil stol og hold armene avslappet. Beveg deg rolig."},
-  {name:"Stående tåhev", tags:["load","leg"], dose:"6–10 reps", detail:"Løft hælene rolig med begge føtter på gulvet. Stå nær en vegg om du trenger balanse."},
-  {name:"Sittende lett bicepscurl", tags:["grip","arm","weighted"], gear:"free", dose:"6–8 reps", detail:"Hold albuene ved siden av kroppen og velg en lett manual."},
-  {name:"Knebøy med lette manualer langs siden", tags:["load","squat","leg","grip","arm","weighted"], gear:"free", returnOnly:true, dose:"5–8 reps", detail:"Bruk et bevegelsesutslag du allerede tåler og en lett belastning."},
-  {name:"Rolig håndåpning", tags:["arm","handMotion"], dose:"6–8 reps", detail:"Sitt med avslappede skuldre. Åpne og lukk hånden rolig."}
+  {name:"Rolige skulderbladbevegelser", tags:["arm"], dose:"6–8 repetisjoner", detail:"Sitt eller stå med armene avslappet. Før skulderbladene forsiktig sammen og slipp."},
+  {name:"Sett deg og reis deg fra en stol", tags:["load","squat","leg"], dose:"5–8 repetisjoner", detail:"Bruk en stabil stol og hold armene avslappet. Beveg deg rolig."},
+  {name:"Stående tåhev", tags:["load","leg"], dose:"6–10 repetisjoner", detail:"Løft hælene rolig med begge føtter på gulvet. Stå nær en vegg om du trenger balanse."},
+  {name:"Sittende lett bicepscurl", tags:["grip","arm","weighted"], gear:"free", returnOnly:true, dose:"6–8 repetisjoner", detail:"Hold albuene ved siden av kroppen og velg en lett manual."},
+  {name:"Knebøy med lette manualer langs siden", tags:["load","squat","leg","grip","arm","weighted"], gear:"free", returnOnly:true, dose:"5–8 repetisjoner", detail:"Bruk et bevegelsesutslag du allerede tåler og en lett belastning."},
+  {name:"Rolig håndåpning", tags:["arm","handMotion"], dose:"6–8 repetisjoner", detail:"Sitt med avslappede skuldre. Åpne og lukk hånden rolig."}
 ];
 
-const armBend = {name:"Unloaded elbow bends", tags:["arm"], dose:"2–3 reps", detail:"With your upper arm resting by your side, slowly bend and straighten the elbow within a comfortable range."};
-const thighSlide = {name:"Supported heel slides", tags:["leg"], dose:"2–3 reps", detail:"With your leg supported, slowly slide your heel towards you and back out within a comfortable range."};
+const armBend = {name:"Albuebøy uten vekt", tags:["arm"], dose:"2–3 repetisjoner", detail:"Hold overarmen inntil kroppen. Bøy og strekk albuen rolig så langt det kjennes greit."};
+const thighSlide = {name:"Hælglidning med støtte", tags:["leg"], dose:"2–3 repetisjoner", detail:"La beinet hvile på underlaget. Trekk hælen rolig inn mot deg og skyv den ut igjen."};
 const tattooWorkout = [
-  {name:"Tempo air squats", tags:["load","squat","leg"], dose:"1 × 6–8", detail:"Sit back and down slowly, then stand. Keep your arms relaxed and use bodyweight."},
-  {name:"Low step-ups", tags:["load","leg"], dose:"1 × 4–6 per side", detail:"Step onto a low, stable step. Alternate legs and move at a steady pace."},
-  {name:"Reverse lunges", tags:["load","leg"], dose:"1 × 4–6 per side", detail:"Take a short step back and lower gently, with your arms relaxed."},
-  {name:"Glute bridges", tags:["leg","torso"], dose:"1 × 6–8", detail:"Lie with your knees bent, lift your hips gently, and keep the tattoo clear of the floor or mat."},
-  {name:"Leg-only dead bug", tags:["leg","torso"], dose:"1 × 4–6 per side", detail:"Lie on your back, keep your arms relaxed clear of the mat, and slowly lower one heel at a time."}
+  {name:"Rolig knebøy med kroppsvekt", tags:["load","squat","leg"], dose:"1 × 6–8", detail:"Sett deg rolig bakover og ned før du reiser deg. Hold armene avslappet."},
+  {name:"Oppsteg på lav kasse", tags:["load","leg"], dose:"1 × 4–6 per side", detail:"Gå opp på et lavt, stødig trinn. Bytt bein og hold jevnt tempo."},
+  {name:"Bakoverutfall", tags:["load","leg"], dose:"1 × 4–6 per side", detail:"Ta et kort steg bakover. Senk deg rolig med avslappede armer."},
+  {name:"Seteløft", tags:["leg","torso"], dose:"1 × 6–8", detail:"Ligg med bøyde knær og løft hoftene rolig. Hold tatoveringen unna underlaget."},
+  {name:"Død bille med bare bein", tags:["leg","torso"], dose:"1 × 4–6 per side", detail:"Ligg på ryggen. Hold armene avslappet unna matta og senk én hæl av gangen."}
 ];
+
+const crossfitExercises = [
+  {name:"Marsj på stedet", tags:["load","leg"], dose:"20 sek", detail:"Løft føttene lett og hold jevnt tempo."},
+  {name:"Knebøy til stol", tags:["load","squat","leg"], dose:"5–8 repetisjoner", detail:"Sett deg kontrollert mot en stødig stol, og reis deg rolig."},
+  {name:"Armheving mot vegg", tags:["arm","support","load","torso"], dose:"5–8 repetisjoner", detail:"Stå mot en vegg. Bøy albuene og skyv rolig fra."},
+  {name:"Sittende utadrotasjon uten vekt", tags:["arm"], dose:"5–8 repetisjoner", detail:"Hold albuene inntil kroppen og før underarmene rolig litt ut."},
+  {name:"Sittende skulderpress med manualer", tags:["arm","overhead","grip","weighted"], gear:"free", returnOnly:true, dose:"5–8 repetisjoner", detail:"Bruk lette manualer og et utslag du allerede tåler."},
+  {name:"Tå- og hælløft med støtte", tags:["load","leg","support"], dose:"5–8 repetisjoner", detail:"Hold lett i noe stødig. Løft hælene, senk dem og løft deretter tærne."}
+];
+
+const mobilityExercises = [
+  {name:"Bryststrekk i døråpning", tags:["arm","support","load","torso"], dose:"20 sek per side", detail:"Hvil underarmen lett mot karmen. Ta et lite steg fram til du kjenner en mild strekk."},
+  {name:"Leggstrekk mot vegg", tags:["load","leg","support"], dose:"20 sek per side", detail:"Stå i kort splittstilling og la den bakerste hælen hvile i gulvet."},
+  {name:"Sittende strekk av bakside lår", tags:["leg","bend","torso"], dose:"20 sek per side", detail:"Sett én hæl foran deg. Len deg litt fram fra hofta med avslappet rygg."},
+  {name:"Sittende setestrekk", tags:["leg","bend","torso"], dose:"20 sek per side", detail:"Legg ankelen over motsatt kne. Len deg litt fram hvis det kjennes greit."},
+  {name:"Sittende underarmsstrekk", tags:["arm","grip","handMotion"], dose:"20 sek per side", detail:"Hold armen lavt og før hånden forsiktig bakover med den andre hånden."}
+];
+
+const workoutFormats = [
+  {name:"Kontrollerte runder", instruction:(minutes, count) =>
+    `Gjør øvelse 1 til ${count} i rekkefølge. Hvil 45–60 sekunder mellom rundene. Ta opptil tre runder, innenfor ${minutes} minutter.`,
+   amount:item => item.dose},
+  {name:"EMOM i rolig tempo", instruction:(minutes, count) =>
+    `Start én øvelse på hvert hele minutt. Gå fra øvelse 1 til ${count} og begynn på toppen igjen. Hvil resten av hvert minutt. Avslutt etter ${minutes} minutter.`,
+   amount:item => item.dose.includes("sek") ? "20 sek" : "4 rolige repetisjoner" + (item.dose.includes("per side") ? " per side" : "")},
+  {name:"Arbeid og pause", instruction:(minutes, count) =>
+    `Jobb rolig i 20 sekunder, hvil i 40, og gå videre. Gjenta øvelse 1 til ${count} i opptil ${minutes} minutter.`,
+   amount:() => "20 sek rolig arbeid"}
+];
+
+function createWorkout(allowed, minutes, index, gentleTattoo) {
+  if (gentleTattoo || allowed.length < 2) {
+    return {title:gentleTattoo ? "Rolig aktivitet" : "Én øvelse denne gangen", items:allowed,
+      instruction:"Hold et rolig tempo.", amount:item => item.dose};
+  }
+  const timed = allowed.filter(item => !item.dose.includes("min"));
+  if (timed.length < 2) {
+    return {title:"Rolig økt", items:allowed, instruction:"Ta én øvelse av gangen med pause imellom.", amount:item => item.dose};
+  }
+  const start = index % timed.length;
+  const items = [...timed.slice(start), ...timed.slice(0, start)].slice(0, minutes === 10 ? 2 : 3);
+  const format = workoutFormats[index % workoutFormats.length];
+  return {title:format.name, items, instruction:format.instruction(minutes, items.length), amount:format.amount};
+}
 
 const rehabExercises = {
   hand: [exercises.find(item => item.tags.includes("handMotion"))],
-  forearm: [{name:"Palm-up and palm-down turns", tags:["arm"], dose:"2–3 each way", detail:"Keep the elbow beside you and bent. Slowly rotate the forearm so the palm faces up, then down."}],
+  forearm: [{name:"Vri håndflaten opp og ned", tags:["arm"], dose:"2–3 hver vei", detail:"Hold albuen bøyd inntil kroppen. Vri underarmen rolig slik at håndflaten vender opp og ned."}],
   upperArm: [armBend],
   arm: [armBend],
   thigh: [thighSlide],
   neck: [
-    {name:"Seated head turns", tags:["neckTurn"], dose:"2–3 each way", detail:"Sit upright and slowly turn your head a short, comfortable distance to each side."},
-    {name:"Gentle chin nods", tags:["neckTurn"], dose:"2–3 reps", detail:"Sit upright. Make a small nod, then return your head to neutral."}
+    {name:"Sittende hodevending", tags:["neckTurn"], dose:"2–3 hver vei", detail:"Sitt oppreist og vend hodet rolig litt til hver side."},
+    {name:"Små nikk", tags:["neckTurn"], dose:"2–3 repetisjoner", detail:"Sitt oppreist. Nikk lett og gå tilbake til midtstilling."}
   ],
   back: [
-    {name:"Pelvic tilts", tags:["bend","leg","torso"], dose:"2–3 reps", detail:"Lie with knees bent. Gently rock your pelvis to flatten your lower back, then relax."}
+    {name:"Bekkenvipp", tags:["bend","leg","torso"], dose:"2–3 repetisjoner", detail:"Ligg med bøyde knær. Vipp bekkenet lett så korsryggen flater ut. Slapp av igjen."}
   ],
   knee: [
-    {name:"Seated knee straightening", tags:["leg"], dose:"2–3 per side", detail:"From a stable chair, gently straighten one knee within a comfortable range, then lower your foot. Use no added weight."}
+    {name:"Sittende knestrekk", tags:["leg"], dose:"2–3 per side", detail:"Sitt stødig. Strekk ett kne rolig så langt det kjennes greit, og senk foten. Bruk kroppsvekt."}
   ],
   ankle: [
-    {name:"Seated ankle bends", tags:["leg"], dose:"2–3 reps", detail:"Sit with your foot supported and gently move your toes towards and away from you, within your comfortable range."}
+    {name:"Sittende ankelbøy", tags:["leg"], dose:"2–3 repetisjoner", detail:"Støtt foten og vipp tærne rolig mot deg og fra deg innenfor et behagelig utslag."}
   ],
   shoulder: [
-    {name:"Supported shoulder pendulum", tags:["arm","bend","support","load"], dose:"2–3 small swings", detail:"Support yourself with the other hand on a stable surface. Let the affected arm relax and swing gently."},
-    {name:"Seated shoulder blade squeezes", tags:["arm"], dose:"2–3 reps", detail:"With arms relaxed by your sides, gently draw the shoulder blades together, then release."}
+    {name:"Skulderpendel med støtte", tags:["arm","bend","support","load"], dose:"2–3 små pendelbevegelser", detail:"Støtt deg med den andre hånden mot et stødig underlag. La armen henge og pendle forsiktig."},
+    {name:"Sittende skulderbladsklem", tags:["arm"], dose:"2–3 repetisjoner", detail:"La armene henge avslappet. Trekk skulderbladene lett sammen og slipp opp."}
   ],
   elbow: [
-    {name:"Supported elbow bend", tags:["arm"], dose:"2–3 reps", detail:"Rest your upper arm by your side. Slowly bend and straighten your elbow with no weight."}
+    {name:"Albuebøy", tags:["arm"], dose:"2–3 repetisjoner", detail:"Hold overarmen inntil kroppen. Bøy og strekk albuen rolig uten vekt."}
   ],
   wrist: [
-    {name:"Supported wrist bends", tags:["arm"], dose:"2–3 reps", detail:"Rest your forearm on a table with your hand over the edge. Slowly raise and lower the hand within a comfortable range."}
+    {name:"Håndleddsbøy med støtte", tags:["arm"], dose:"2–3 repetisjoner", detail:"Hvil underarmen på et bord med hånden over kanten. Løft og senk hånden rolig."}
   ],
   hip: [
-    {name:"Supported standing hip extension", tags:["load","leg","support"], dose:"2–3 per side", detail:"Hold a stable surface and gently move one leg a short distance behind you. Keep your trunk upright."}
+    {name:"Stående hofteføring bakover", tags:["load","leg","support"], dose:"2–3 per side", detail:"Hold i noe stødig. Før ett bein litt bakover og hold overkroppen oppreist."}
   ],
   lowerLeg: [
-    {name:"Seated ankle movement", tags:["leg"], dose:"2–3 reps", detail:"Sit with your lower leg supported and gently point and flex your foot without resistance."}
+    {name:"Sittende ankelbevegelse", tags:["leg"], dose:"2–3 repetisjoner", detail:"Støtt leggen og vipp foten rolig fram og tilbake uten motstand."}
   ]
 };
 
-function plan({areas, names = [], acute, blocked, phase, location, gear, alert, hold, tattooReady}) {
+function plan({areas, names = [], healthy, acute, blocked, phase, location, gear, alert, hold, tattooReady}) {
   const injury = areas.some(area => area !== "tattoo");
   if (alert) return {message:"Sett treningen på pause", detail:"Kontakt legevakt på 116 117 hvis det haster. Ved akutt alvorlige symptomer, ring 113."};
   if (acute) return {
-    message: "Follow your clinician’s guidance before training",
-    detail: "If you suspect a recent rupture or fracture, seek prompt medical assessment. For an assessed injury or condition, follow your clinician’s activity plan."
+    message: "Følg rådene fra behandleren før trening",
+    detail: "Få rask medisinsk vurdering ved mistanke om fersk ruptur eller brudd. Hvis skaden er vurdert, følg aktivitetsplanen fra behandleren."
   };
-  if (!areas.length) return {message:"Describe what you need to protect", detail:"Enter a symptom, injury or other reason to adapt your workout."};
+  if (!areas.length && !healthy) return {message:"Skriv hva du trenger å skåne", detail:"Skriv en plage, skade eller annen grunn til at du vil tilpasse økta."};
   if (hold) return {message:"Vent med å lage økt", detail:"Følg restriksjonene du har fått fra behandler eller tatovør."};
   if (areas.some(area => assessmentAreas.has(area))) return {
-    message:"Individual activity advice needed",
-    detail:"Ask a clinician which movements and loads fit your situation before using a workout plan."
+    message:"Du trenger råd tilpasset skaden",
+    detail:"Spør en behandler hvilke bevegelser og belastninger som passer før du følger et øktforslag."
   };
   if (injury && phase === "early") return {message:"Avvent en treningsøkt", detail:"Ved fersk skade må valg av aktivitet ta hensyn til hva som har skjedd og hva du kan belaste. Følg råd fra behandleren."};
   const excluded = new Set([...blocked, ...areas.flatMap(area =>
@@ -315,23 +300,25 @@ function plan({areas, names = [], acute, blocked, phase, location, gear, alert, 
   const gentleTattoo = areas.includes("tattoo") && phase === "early";
   if (gentleTattoo && location !== "arm") return {message:"Vent med en strukturert økt", detail:"Følg etterbehandlingen fra tatovøren. Unngå friksjon og trykk på tatoveringen mens den gror."};
   const tattooSession = areas.includes("tattoo") && location === "arm" && (!gentleTattoo || tattooReady);
-  const workout = tattooSession ? tattooWorkout : gentleTattoo ? exercises.slice(0, 1) : exercises;
+  const workout = tattooSession ? tattooWorkout : gentleTattoo ? exercises.slice(0, 1) : [...exercises, ...crossfitExercises];
   const allowed = workout.filter(item =>
     (!item.gear || item.gear === gear) &&
-    (!item.returnOnly || phase === "return") && !item.tags.some(tag => excluded.has(tag)));
+    (!item.returnOnly || phase === "return" || healthy) && !item.tags.some(tag => excluded.has(tag)));
   const rehab = areas.flatMap(area => {
     const excludedForArea = new Set([...blocked, ...areas.filter(other => other !== area).flatMap(other =>
       other === "tattoo" ? tattooFilters[location] : filters[other])]);
     const movements = [...(rehabExercises[area] ?? [])];
-    if (area === "thigh" && names.includes("Back of thigh / hamstring")) {
-      movements.push({name:"Light heel press", tags:["leg"], dose:"2–3 gentle holds", detail:"With your knee slightly bent, press your heel lightly into the floor without moving the leg, then relax."});
+    if (area === "thigh" && names.includes("Bakside lår / hamstring")) {
+      movements.push({name:"Lett hælpress", tags:["leg"], dose:"2–3 lette hold", detail:"Bøy kneet litt. Press hælen lett ned uten å bevege beinet, og slipp opp."});
     }
-    if (area === "thigh" && names.includes("Front of thigh / quadriceps")) {
-      movements.push({name:"Gentle thigh tightening", tags:["leg"], dose:"2–3 gentle holds", detail:"With your leg supported, gently press the back of your knee into a towel, then relax."});
+    if (area === "thigh" && names.includes("Forside lår / quadriceps")) {
+      movements.push({name:"Lett lårspenn", tags:["leg"], dose:"2–3 lette hold", detail:"Støtt beinet. Press knehasen lett ned i et håndkle, og slipp opp."});
     }
     return movements.filter(item => !item.tags.some(tag => excludedForArea.has(tag)));
   });
-  return {allowed, rehab, gentleTattoo, tattooSession};
+  const mobility = gentleTattoo && !tattooReady ? [] :
+    mobilityExercises.filter(item => !item.tags.some(tag => excluded.has(tag)));
+  return {allowed, rehab, mobility, gentleTattoo, tattooSession};
 }
 
 const key = "tren-tilpasset-logg-v1";
@@ -346,48 +333,64 @@ function saveHistory(next) {
   return true;
 }
 
+let variation = 0;
 function renderPlan() {
-  const {areas, names, acute, urgent} = readSymptoms(symptomSearch.value);
+  const {areas, names, healthy, acute, urgent} = readSymptoms(symptomSearch.value);
   const phase = byId("phase").value;
   const minutes = Number(byId("length").value);
   const result = byId("result");
-  const selection = plan({areas, names, acute, phase, tattooReady:byId("tattooReady").checked, blocked:selected("restrictions"), location:byId("location").value,
+  const selection = plan({areas, names, healthy, acute, phase, tattooReady:byId("tattooReady").checked, blocked:selected("restrictions"), location:byId("location").value,
     gear:byId("gear").value, alert:urgent || byId("alert").checked, hold:byId("hold").checked});
-  const labels = [...new Set([...names, ...areas.filter(area => area !== "other").map(area => t(conditions[area]))])];
-  const matched = labels.length ? `<p class="meta">Matched search terms: ${labels.join(" · ")}</p>` :
-    `<p class="meta">No specific search match</p>`;
+  const labels = [...new Set([...names, ...areas.filter(area => area !== "other").map(area => conditions[area])])];
+  const matched = labels.length ? `<p class="meta">Gjenkjent: ${labels.join(" · ")}</p>` :
+    healthy ? "" : '<p class="meta">Fant ingen kjent plage</p>';
   if (selection.message) {
-    result.innerHTML = `${matched}<h2>${t(selection.message)}</h2><p class="note warn">${t(selection.detail)}</p>`;
+    result.innerHTML = `${matched}<h2>${selection.message}</h2><p class="note warn">${selection.detail}</p>`;
     return;
   }
-  if (!selection.allowed.length && !selection.rehab.length) {
-    result.innerHTML = `${matched}<h2>${t("Ingen øvelser i dette utvalget")}</h2><p class="note">${t("Øvelsene i appen passer ikke med kombinasjonen du valgte.")}</p>`;
+  const focus = byId("focus").value;
+  const workout = focus === "mobility" || !selection.allowed.length ? null :
+    createWorkout(selection.allowed, minutes, variation, selection.gentleTattoo && !selection.tattooSession);
+  const mobility = focus === "workout" ? [] : selection.mobility;
+  const rehab = focus === "mobility" ? [] : selection.rehab;
+  if (!workout && !mobility.length && !rehab.length) {
+    result.innerHTML = `${matched}<h2>Ingen øvelser passer</h2><p class="note">Den valgte økttypen har ingen øvelser som passer med fasen og bevegelsene du trenger å skåne.</p>`;
     return;
   }
   void fetch("/usage", {method:"POST", credentials:"omit", keepalive:true}).catch(() => {});
-  const dose = phase === "return" && minutes >= 15 ? "2 sett" : "1 sett";
-  const title = selection.tattooSession ? "Easy bodyweight workout" : selection.gentleTattoo ? "Rolig aktivitet" : phase === "return" ? "Lett treningsøkt" : "Rolig økt";
-  const chosen = selection.allowed.slice(0, minutes === 10 ? 3 : minutes === 15 ? 5 : 7);
+  const title = workout?.title ?? (mobility.length ? "Rolig tøyeprogram" : "Opptrening");
   const exerciseRow = (item, amount) =>
-    `<div class="exercise"><strong>${t(item.name)}</strong><span class="dose">${amount}</span><small>${t(item.detail)}</small></div>`;
-  const rehabSection = selection.rehab.length ? `<section class="plan-section"><h3>Rehabilitation</h3>
-    <p class="subtle">Use these gentle movements if they fit your recovery stage and any advice from your clinician. Stop if symptoms worsen.</p>
-    ${selection.rehab.map(item => exerciseRow(item, item.dose)).join("")}</section>` : "";
-  const workoutSection = chosen.length ? `<section class="plan-section"><h3>Adapted workout</h3>
-    ${chosen.map(item => exerciseRow(item, item.dose.includes("reps") ? t(dose) + " × " + item.dose : item.dose)).join("")}</section>` :
-    '<p class="subtle">Your selections allow rehabilitation movements only.</p>';
+    `<div class="exercise"><strong>${item.name}</strong><span class="dose">${amount}</span><small>${item.detail}</small></div>`;
+  const rehabSection = rehab.length ? `<section class="plan-section"><h3>Opptrening</h3>
+    <p class="subtle">Gjør bevegelsene rolig hvis de passer med opplegget fra behandleren.</p>
+    ${rehab.map(item => exerciseRow(item, item.dose)).join("")}</section>` : "";
+  const workoutSection = workout ? `<section class="plan-section"><h3>Treningsøkt</h3><p class="subtle">${workout.instruction}</p>
+    ${workout.items.map(item => exerciseRow(item, workout.amount(item))).join("")}
+    ${workout.items.length > 1 ? '<button class="remove" id="nextWorkout" type="button">Vis en annen treningsøkt</button>' : ""}</section>` : "";
+  const mobilitySection = mobility.length ? `<section class="plan-section"><h3>Tøyeprogram</h3>
+    <p class="subtle">Ta øvelsene i rekkefølge. Pust rolig, hold strekken lett og bytt side der det står. Gjenta én gang hvis det kjennes greit.</p>
+    ${mobility.map(item => exerciseRow(item, item.dose)).join("")}</section>` :
+    focus === "both" ? '<p class="subtle">Ingen tøyeøvelser passer med valgene dine.</p>' : "";
   const tattooNote = areas.includes("tattoo") ? " Unngå trykk og gnissing på tatoveringen, og følg rådene fra tatovøren." : "";
-  result.innerHTML = `${matched}<p class="meta">${areas.map(area => t(conditions[area])).join(" · ") || t("Generell økt")} · ${t(phases[phase])}</p>
-    <h2>${t(title)}</h2><p class="note">${t(selection.tattooSession ? "Keep the pace easy and rest between movements. Avoid rubbing the tattoo against clothing, equipment or the floor." : selection.gentleTattoo ? "Hvis etterbehandlingen tillater det, kan du ta en kort, rolig gåtur." : "Start lett. Stopp hvis symptomene øker under økten, og sjekk hvordan kroppen reagerer etterpå og neste dag.")}${t(tattooNote)}</p>
-    ${rehabSection}${workoutSection}
-    <label class="check">${t("Hvordan gikk økten?")}<select id="feedback"><option value="">${t("Velg respons")}</option><option value="Gikk fint">${t("Gikk fint")}</option><option value="Ubehag">${t("Ubehag")}</option><option value="Stoppet økten">${t("Stoppet økten")}</option></select></label>
-    <button class="primary" id="save" type="button">${t("Lagre i loggen")}</button><p id="saveStatus" role="status"></p>`;
+  result.innerHTML = `${matched}<p class="meta">${phases[phase]}</p>
+    <h2>${title}</h2><p class="note">${selection.gentleTattoo && !selection.tattooSession ?
+      "Hvis etterbehandlingen tillater det, kan du ta en kort, rolig gåtur." :
+      "Start lett. Stopp hvis plagene øker underveis, og sjekk hvordan kroppen reagerer samme dag og neste dag."}${tattooNote}</p>
+    ${rehabSection}${workoutSection}${mobilitySection}
+    <label class="check">Hvordan gikk økten?<select id="feedback"><option value="">Velg respons</option><option value="Gikk fint">Gikk fint</option><option value="Ubehag">Ubehag</option><option value="Stoppet økten">Stoppet økten</option></select></label>
+    <button class="primary" id="save" type="button">Lagre i loggen</button><p id="saveStatus" role="status"></p>`;
+  const nextWorkout = byId("nextWorkout");
+  if (nextWorkout) nextWorkout.onclick = () => {
+    variation += 1;
+    renderPlan();
+    byId("nextWorkout")?.focus();
+  };
   byId("save").onclick = () => {
     const feedback = byId("feedback").value;
     if (!feedback) { byId("feedback").focus(); return; }
     const ok = saveHistory([{title, areas:areas.map(area => conditions[area]).join(" · "), phase:phases[phase],
-      feedback, date:new Date().toISOString(), exercises:[...selection.rehab, ...chosen].map(item => item.name)}, ...history]);
-    byId("saveStatus").textContent = ok ? t("Økten er lagret.") : t("Kunne ikke lagre økten på denne enheten.");
+      feedback, date:new Date().toISOString(), exercises:[...rehab, ...(workout?.items ?? []), ...mobility].map(item => item.name)}, ...history]);
+    byId("saveStatus").textContent = ok ? "Økten er lagret." : "Kunne ikke lagre økten på denne enheten.";
     if (ok) byId("save").disabled = true;
   };
 }
@@ -395,24 +398,24 @@ function renderPlan() {
 function showLog() {
   const list = byId("entries");
   list.replaceChildren();
-  if (!history.length) list.textContent = t("Ingen registrerte økter ennå.");
+  if (!history.length) list.textContent = "Ingen registrerte økter ennå.";
   history.forEach((entry, index) => {
     const row = document.createElement("div");
     row.className = "entry";
     const heading = document.createElement("strong");
-    heading.textContent = t(entry.title);
+    heading.textContent = entry.title;
     const detail = document.createElement("p");
     detail.className = "subtle";
-    detail.textContent = [new Date(entry.date).toLocaleDateString(document.documentElement.lang), (entry.areas || "").split(" · ").map(t).join(" · "), t(entry.phase), t(entry.feedback)].filter(Boolean).join(" · ");
+    detail.textContent = [new Date(entry.date).toLocaleDateString(document.documentElement.lang), entry.areas, entry.phase, entry.feedback].filter(Boolean).join(" · ");
     const exerciseList = document.createElement("p");
-    exerciseList.textContent = (entry.exercises || []).map(t).join(", ");
+    exerciseList.textContent = (entry.exercises || []).join(", ");
     const button = document.createElement("button");
     button.type = "button";
     button.className = "remove";
-    button.textContent = t("Slett økt");
+    button.textContent = "Slett økt";
     button.onclick = () => {
       if (saveHistory(history.filter((_, i) => i !== index))) showLog();
-      else button.textContent = t("Kunne ikke slette");
+      else button.textContent = "Kunne ikke slette";
     };
     row.append(heading, detail, exerciseList, button);
     list.append(row);
@@ -438,6 +441,7 @@ byId("planner").addEventListener("submit", event => {
 
 function resetResult() {
   updateSymptomFields();
+  variation = 0;
   resultPanel.hidden = true;
   resultPanel.replaceChildren();
 }

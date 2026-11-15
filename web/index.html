@@ -1,45 +1,53 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="Build a workout around the movements you need to avoid, your recovery stage and your equipment.">
-<title>Tren tilpasset – Adaptive workout planner</title>
+<html lang="nb"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Få forslag til tilpasset trening, opptrening og bevegelighet.">
+<title>Tren tilpasset – Tilpasset trening</title>
 <link rel="canonical" href="__ORIGIN__/"><meta name="theme-color" content="#f5f6f1"><link rel="stylesheet" href="/style.css"></head>
 <body>
-<header><a class="brand" href="/"><span class="mark" aria-hidden="true">↗</span> Tren tilpasset</a><nav class="nav" aria-label="Main navigation"><button id="planTab" aria-current="true">Plan</button><button id="logTab">Log</button></nav></header>
-<main><section class="hero"><h1>Train on your terms<span>.</span></h1><p>Describe your symptoms and choose your recovery stage to see a plan.</p></section>
+<header><a class="brand" href="/"><span class="mark" aria-hidden="true">↗</span> Tren tilpasset</a><nav class="nav" aria-label="Hovedmeny"><button id="planTab" aria-current="true">Plan</button><button id="logTab">Logg</button></nav></header>
+<main><section class="hero"><h1>Tren på dine vilkår<span>.</span></h1><p>Skriv hva du må ta hensyn til, velg fase og få en økt.</p></section>
 <div class="grid" id="planView">
-<form class="panel" id="planner"><h2>Adapt your workout</h2>
-<label class="symptom-label" for="symptomSearch">Describe what you need to protect</label>
+<form class="panel" id="planner"><h2>Lag en økt</h2>
+<label class="symptom-label" for="symptomSearch">Hva skal du ta hensyn til?</label>
 <input type="search" id="symptomSearch" autocomplete="off" aria-describedby="symptomHelp" required>
-<p class="symptom-help" id="symptomHelp">Enter your symptoms or injury in Norwegian or English.</p>
-<label class="phase-label" for="phase">Where are you in your recovery?</label>
+<p class="symptom-help" id="symptomHelp">Beskriv plagen med egne ord på norsk eller engelsk. Skriv «ingen skade» hvis det ikke er noe du trenger å skåne.</p>
+<label class="phase-label" id="phaseLabel" for="phase">Hvor er du i opptreningen?</label>
 <select id="phase" required>
-  <option value="" selected disabled>Choose your stage</option>
-  <option value="early">This just started</option>
-  <option value="recovery">I’m doing rehab</option>
-  <option value="return">I’m returning to training</option>
+  <option value="" selected disabled>Velg fase</option>
+  <option value="early">Plagen er ny</option>
+  <option value="recovery">Jeg er i opptrening</option>
+  <option value="return">Jeg er klar for lett trening</option>
+  <option value="normal" hidden>Jeg trener vanlig</option>
 </select>
-<label id="locationField" class="phase-label" hidden>Tattoo location
-  <select id="location"><option value="arm">Forearm / arm</option><option value="leg">Leg / foot</option><option value="torso">Back / chest / abdomen</option><option value="other">Other location</option></select>
+<label class="phase-label" for="focus">Hva vil du ha?</label>
+<select id="focus">
+  <option value="both">CrossFit-økt og tøying</option>
+  <option value="workout">Bare CrossFit-økt</option>
+  <option value="mobility">Bare tøyeprogram</option>
+</select>
+<p class="symptom-help">Velg CrossFit for runder eller intervaller. Tøyeprogrammet viser hvor lenge du holder hver tøying. I opptrening får du også øvelser for området når du velger CrossFit.</p>
+<label id="locationField" class="phase-label" hidden>Hvor sitter tatoveringen?
+  <select id="location"><option value="arm">Underarm / arm</option><option value="leg">Bein / fot</option><option value="torso">Rygg / bryst / mage</option><option value="other">Annet sted</option></select>
 </label>
-<label class="check" id="tattooReadyField" hidden><input type="checkbox" id="tattooReady">My tattoo aftercare allows light exercise.</label>
-<details class="safety"><summary>Safety check</summary>
-  <p>Warning signs include being unable to put weight on the leg after injury, increasing swelling, rapidly worsening pain, new weakness or numbness, or increasing redness, warmth, pus or fever after a tattoo.</p>
-  <p>With back pain, seek emergency assessment for new bladder or bowel problems, numbness around the genitals or anus, or weakness in both legs.</p>
-  <label class="check"><input type="checkbox" id="alert">I have one of these warning signs.</label>
-  <label class="check"><input type="checkbox" id="hold">I’ve been advised to pause training or have an exercise restriction.</label>
+<label class="check" id="tattooReadyField" hidden><input type="checkbox" id="tattooReady">Etterbehandlingen tillater lett trening.</label>
+<details class="safety"><summary>Når bør du avvente trening?</summary>
+  <p>Faresignaler er blant annet at du ikke kan belaste beinet etter en skade, at hevelsen eller smerten øker raskt, eller at du får ny svakhet eller nummenhet. Ved fersk tatovering kan økende rødhet, varme, puss eller feber være tegn på infeksjon.</p>
+  <p>Ved ryggsmerter trenger nye problemer med vannlating eller avføring, nummenhet i skrittet eller svakhet i begge bein akutt vurdering.</p>
+  <label class="check"><input type="checkbox" id="alert">Jeg har et faresignal fra listen.</label>
+  <label class="check"><input type="checkbox" id="hold">Jeg har fått beskjed om å vente med trening eller har en treningsrestriksjon.</label>
 </details>
-<button class="primary" type="submit">Show my plan</button>
-<details class="workout-options"><summary>Adjust workout</summary>
+<button class="primary" type="submit">Vis økt</button>
+<details class="workout-options"><summary>Tilpass utstyr og bevegelser</summary>
   <div class="fields">
-    <label>Equipment<select id="gear"><option value="body">Bodyweight</option><option value="free">Free weights</option></select></label>
-    <label>Workout length<select id="length"><option value="10">About 10 min</option><option selected value="15">About 15 min</option><option value="20">About 20 min</option></select></label>
+    <label>Utstyr<select id="gear"><option value="body">Kroppsvekt</option><option value="free">Frivekter</option></select></label>
+    <label>Øktlengde<select id="length"><option value="10">Ca. 10 min</option><option selected value="15">Ca. 15 min</option><option value="20">Ca. 20 min</option></select></label>
   </div>
-  <fieldset><legend>Movements to avoid</legend><div class="choices" id="restrictions"></div></fieldset>
+  <fieldset><legend>Bevegelser du vil unngå</legend><div class="choices" id="restrictions"></div></fieldset>
 </details></form>
 <section class="panel" id="result" tabindex="-1" aria-live="polite" hidden></section></div>
-<section id="logView" class="panel" hidden><h2>Workout log</h2><p class="subtle">Workouts you’ve saved on this device.</p><div id="entries"></div></section></main>
-<footer><p class="guide-links"><a href="/working-out-with-a-new-tattoo/">Working out with a new tattoo</a> · <a href="/training-with-jumpers-knee/">Training with jumper’s knee</a></p>
-<p class="guide-links">We count page views and workouts created in aggregate. Your workout selections and log are processed on this device.</p>
-These are general activity suggestions. Follow your clinician’s plan for injuries and your tattoo artist’s aftercare advice for tattoos.
-<details><summary>Sources</summary><a href="https://www.fhi.no/publ/eldre/kunnskapsoppsummering-om-manuelle-behandlingsformer/">FHI review (search terminology)</a> · <a href="https://eadv.org/wp-content/uploads/2023/04/EADV-TATTOO-Tattoo-Aftercare.pdf">EADV tattoo aftercare</a> · <a href="https://www.nhs.uk/conditions/back-pain/">NHS back pain</a> · <a href="https://www.nhs.uk/symptoms/knee-pain/">NHS knee pain</a> · <a href="https://www.nhs.uk/conditions/sprains-and-strains/">NHS sprains and strains</a></details></footer>
+<section id="logView" class="panel" hidden><h2>Treningslogg</h2><p class="subtle">Økter lagret på denne enheten.</p><div id="entries"></div></section></main>
+<footer><p class="guide-links"><a href="/working-out-with-a-new-tattoo/">Trene med fersk tatovering</a> · <a href="/training-with-jumpers-knee/">Trene med hopperkne</a></p>
+<p class="guide-links">Vi teller sidevisninger og opprettede økter samlet. Treningsvalg og logg behandles på enheten din.</p>
+Forslagene gjelder generell aktivitet. Følg opplegget fra behandleren eller etterbehandlingen fra tatovøren.
+<details><summary>Kilder</summary><a href="https://www.fhi.no/publ/eldre/kunnskapsoppsummering-om-manuelle-behandlingsformer/">FHI om søkebegreper</a> · <a href="https://eadv.org/wp-content/uploads/2023/04/EADV-TATTOO-Tattoo-Aftercare.pdf">EADV om tatovering</a> · <a href="https://www.nhs.uk/conditions/back-pain/">NHS om ryggsmerter</a> · <a href="https://www.nhs.uk/symptoms/knee-pain/">NHS om knesmerter</a> · <a href="https://www.nhs.uk/conditions/sprains-and-strains/">NHS om forstuing og strekk</a> · <a href="https://www.crossfit.com/essentials/crossfit-terms-explained">CrossFit om øktformater</a> · <a href="https://pliability.com/romwod">Pliability (ROMWOD) om mobilitetsrutiner</a></details></footer>
 <script src="/app.js"></script></body></html>
