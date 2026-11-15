@@ -3,6 +3,8 @@ const files = {
   '/': ['index.html', 'text/html'],
   '/working-out-with-a-new-tattoo/': ['tattoo.html', 'text/html'],
   '/training-with-jumpers-knee/': ['knee.html', 'text/html'],
+  '/behandlere/': ['behandlere.html', 'text/html'],
+  '/figurer.js': ['figurer.js', 'text/javascript'],
   '/style.css': ['style.css', 'text/css'],
   '/app.js': ['app.js', 'text/javascript'],
   '/robots.txt': ['robots.txt', 'text/plain'],

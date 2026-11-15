@@ -142,3 +142,11 @@ footer { padding-block: 22px 32px; font-size: 13px; }
 .workout-options { margin-top: 14px; }
 #result:focus-visible { outline: 2px solid var(--green); outline-offset: 3px; }
 #planView:has(#result[hidden]) { grid-template-columns: minmax(0, 540px); }
+
+.provider-grid { grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); }
+.provider-grid figure { margin: 0; }
+.provider-grid canvas { display: block; width: 100%; max-width: 320px; height: auto; border-radius: 8px; margin: 12px 0; }
+.provider-grid p, .resource-links { margin-block: 8px; }
+.resource-section { margin-top: 28px; }
+.resource-section > h2 { margin-bottom: 14px; }
+.resource-links li + li { margin-top: 8px; }

@@ -1,5 +1,6 @@
 const pageMetrics = {
   '/': 'app_visning',
+  '/behandlere/': 'behandlerguide_visning',
   '/working-out-with-a-new-tattoo/': 'tatoveringsguide_visning',
   '/training-with-jumpers-knee/': 'kneguide_visning'
 };

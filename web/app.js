@@ -12,14 +12,14 @@ const symptomPatterns = {
   shoulder: /\b(?:shoulder\w*|rotator\s*cuff|skulder\w*)\b/,
   ankle: /\b(?:ankle\w*|achil{1,2}es\w*|ak{1,2}il{1,2}es\w*|ankel\w*|overtrakk\w*)\b/,
   wrist: /\b(?:wrist\w*|carpal tunnel|handledd\w*)\b/,
-  elbow: /\b(?:elbow\w*|albue\w*|tennisalbue\w*|golfalbue\w*)\b/,
+  elbow: /\b(?:elbow\w*|albu\w*|tennisalbue\w*|golfalbue\w*)\b/,
   neck: /\b(?:neck|nakke\w*)\b/,
   hip: /\b(?:hip\w*|hofte\w*|groin|lyske\w*|setesmerte\w*|glute\w*)\b/,
   lowerLeg: /\b(?:legg\w*|calf|shin\w*|beinhinne\w*)\b/,
   forearm: /\b(?:forearms?|underarm\w*)\b/,
   upperArm: /\b(?:upper arms?|overarm\w*|biceps\w*|triceps\w*)\b/,
   arm: /\b(?:arms?|armen|armsmerter|armskade\w*)\b/,
-  thigh: /\b(?:thigh\w*|lar(?:et|ene|smerte\w*|strekk\w*|skade\w*|muskel\w*)?|hamstring\w*|quadriceps\w*|quads)\b/,
+  thigh: /\b(?:thigh\w*|lar(?:et|ene|smerte\w*|strekk\w*|skade\w*|muskel\w*)?|hamstrin\w*|quadriceps\w*|quads)\b/,
   foot: /\b(?:foot|feet|toe\w*|fot\w*|tarne|ta(?:en|er|smerte\w*|skade\w*)|heel\w*|plantar\s*fasci\w*|plantarfasci\w*|hal(?:en|smerte\w*|spore\w*)?)\b/,
   hand: /\b(?:hands?|handen|hand(?:flate|smerte|skade)\w*|finger\w*|thumb\w*|tommel\w*|knuckle\w*|kno(?:ke\w*|en|er))\b/,
   head: /\b(?:head|hode\w*|skull|kran\w*|face|ansikt\w*|jaw|kjeve\w*|eye|oye\w*|nose|nese\w*)\b/,
@@ -64,7 +64,7 @@ const additionalConditions = [
   {name:"Ansikts- eller øyeskade", area:"head", pause:true, terms:/\b(?:facial injur\w*|eye injur\w*|ansiktsskade\w*|oyeskade\w*|nesebrudd\w*)\b/},
   {name:"Kragebeinsskade", area:"shoulder", terms:/\b(?:clavicl\w*|collar\s*bone\w*|kragebein\w*|krageben\w*)\b/},
   {name:"Skade i AC-leddet", area:"shoulder", pause:true, terms:/\b(?:ac joint|ac ledd\w*|acromioclavicular\w*)\b/},
-  {name:"Rotatorcuffplager", area:"shoulder", terms:/\b(?:rotator\s*cuff\w*|subacromial\w*|subakromial\w*|shoulder impingement|supraspinatus)\b/},
+  {name:"Rotatorcuffplager", area:"shoulder", terms:/\b(?:rotator\s*cuff\w*|subacromial\w*|subakromial\w*|impingement|impingment|inopingmenet|supraspinatus)\b/},
   {name:"Labrumskade", area:null, pause:true, terms:/\b(?:labrum\w*|labral\w*|slap (?:tear|lesion|skade))\b/},
   {name:"Biceps- eller tricepsplager", area:"upperArm", terms:/\b(?:biceps\w*|triceps\w*)\b/},
   {name:"Karpaltunnelplager", area:"wrist", terms:/\b(?:carpal tunnel|karpaltunnel\w*)\b/},
@@ -93,7 +93,7 @@ const additionalConditions = [
   {name:"Slimposeplager", area:null, terms:/\b(?:bursitis|bursitt\w*|slimpose\w*)\b/},
   {name:"Artrose eller leddbetennelse", area:null, pause:true, terms:/\b(?:osteoarthritis|arthritis|artrose\w*|artritt\w*|leddgikt\w*)\b/},
   {name:"Opptrening etter operasjon", area:null, pause:true, terms:/\b(?:post operativ\w*|postop\w*|operasjon\w*|surgery|kirurgi\w*)\b/},
-  {name:"Bakside lår / hamstring", area:"thigh", terms:/\b(?:hamstring\w*|(?:bakside\w*|bak pa) (?:av )?lar\w*|back of (?:the )?thigh)\b/},
+  {name:"Bakside lår / hamstring", area:"thigh", terms:/\b(?:hamstrin\w*|(?:bakside\w*|bak pa) (?:av )?lar\w*|back of (?:the )?thigh)\b/},
   {name:"Forside lår / quadriceps", area:"thigh", terms:/\b(?:quadriceps\w*|quads|(?:forside\w*|foran pa) (?:av )?lar\w*|front of (?:the )?thigh)\b/},
   {name:"Nakkeskade etter ulykke", area:"neck", pause:true, terms:/\b(?:whiplash|nakkesleng|nakkeskade\w*)\b/},
   {name:"Leggplager", area:"lowerLeg", terms:/\b(?:calf|shin\w*|legg\w*|beinhinne\w*)\b/},
@@ -128,19 +128,24 @@ function readSymptoms(query) {
   const achillesRupture = normalized.split(/\b(?:og|and|men|but)\b/).some(part =>
     achillesTerm.test(part) && (ruptureTerm.test(part) || /(?:akill?es|achilles)\w*ruptur\w*/.test(part)));
   const additionalAssessment = matches.some(entry => entry.pause && entry.name !== "Sene- eller muskelruptur");
-  const acute = achillesRupture || additionalAssessment || matches.some(entry => entry.pause) ||
+  const bicepsRupture = normalized.split(/\b(?:og|and|men|but)\b/).some(part =>
+    /\bbiceps\w*/.test(part) && (ruptureTerm.test(part) || /\bbiceps\w*ruptur/.test(part)));
+  const newNumbness = /\b(?:nummen\w*|numb\w*|dov\w*|sov(?:er|net)?)\b/.test(normalized) &&
+    (areas.has("lowerLeg") || areas.has("foot"));
+  const acute = achillesRupture || bicepsRupture || additionalAssessment || matches.some(entry => entry.pause) ||
     /\b(?:trauma\w*|accident|ulykke\w*|operat\w*|surgery|kirurgi\w*)\b/.test(normalized) ||
     /\b(?:rok\w*|avrevet|revet av|ruptur\w*|torn|tear|snapped|concussion|hjerneryst\w*)\b/.test(normalized);
   return {
     areas: areas.size ? [...areas] : ["other"],
     names: achillesRupture
       ? ["Mulig akillesruptur", ...matches.map(entry => entry.name).filter(name => !["Akillesplager", "Sene- eller muskelruptur"].includes(name))]
-      : matches.map(entry => entry.name),
+      : bicepsRupture ? ["Mulig bicepsruptur"] : matches.map(entry => entry.name),
     achillesRupture,
+    bicepsRupture,
     additionalAssessment,
     tattooLocation,
     acute,
-    urgent: matches.some(entry => entry.urgent)
+    urgent: newNumbness || matches.some(entry => entry.urgent)
   };
 }
 
@@ -174,6 +179,13 @@ function updateSymptomFields() {
   const tattoo = symptoms.areas.includes("tattoo");
   byId("locationField").hidden = !tattoo;
   const clearance = byId("upperBodyClearanceField");
+  byId("activityClearanceField").hidden = symptoms.healthy || tattoo || !symptoms.areas.length ||
+    symptoms.urgent || (symptoms.acute && !symptoms.bicepsRupture) ||
+    symptoms.additionalAssessment || symptoms.areas.some(area => assessmentAreas.has(area)) ||
+    !(phase.value === "early" || symptoms.bicepsRupture);
+  if (byId("activityClearanceField").hidden) byId("activityClearance").checked = false;
+  byId("returnClearanceField").hidden = phase.value !== "return" || symptoms.healthy || symptoms.acute || tattoo;
+  if (byId("returnClearanceField").hidden) byId("returnClearance").checked = false;
   clearance.hidden = !symptoms.achillesRupture || symptoms.additionalAssessment || symptoms.urgent || symptoms.areas.some(area => area !== "ankle") ||
     !["recovery", "return"].includes(phase.value);
   if (clearance.hidden) byId("upperBodyClearance").checked = false;
@@ -243,7 +255,17 @@ const workoutFormats = [
    amount:() => "20 sek rolig arbeid"}
 ];
 
-function createWorkout(allowed, minutes, index, gentleTattoo) {
+function createWorkout(allowed, minutes, index, gentleTattoo, phase) {
+  if (["early", "recovery"].includes(phase) && !gentleTattoo) {
+    const start = index % allowed.length;
+    const ordered = [...allowed.slice(start), ...allowed.slice(0, start)];
+    const items = ordered.slice(0, phase === "early" ? 2 : 3);
+    return {title:phase === "early" ? "Hold kroppen i gang" : "Tren rundt skaden",
+      items, instruction:phase === "early"
+        ? "Gjør hver øvelse én gang i rolig tempo. Ta pauser underveis."
+        : "Gjør ett kontrollert sett av hver øvelse. Hvil minst ett minutt mellom øvelsene.",
+      amount:item => item.dose};
+  }
   if (gentleTattoo || allowed.length < 2) {
     return {title:gentleTattoo ? "Rolig aktivitet" : "Én øvelse denne gangen", items:allowed,
       instruction:"Hold et rolig tempo.", amount:item => item.dose};
@@ -331,7 +353,20 @@ const seatedUpperBody = [
 
 const achillesHelp = "Følg planen fra behandleren for ortose, belastning og øvelser. Vent med egen tøying av legg og akilles til behandleren har godkjent det.";
 
-function plan({areas, names = [], healthy, acute, achillesRupture, additionalAssessment, upperBodyClearance, blocked, phase, location, gear, alert, hold, tattooReady}) {
+const lowerBodyAreas = new Set(["hip", "thigh", "knee", "lowerLeg", "ankle", "foot"]);
+const upperLimbAreas = new Set(["arm", "upperArm", "forearm", "hand", "wrist", "elbow", "shoulder"]);
+const easyLegMovement = [exercises[0], {...exercises[2], detail:"Bruk en stødig, litt høy stol. Reis deg rolig uten å skyve fra med hendene, hvis du kan gjøre det med god balanse."}];
+const legWorkout = [...tattooWorkout.slice(0, 3), ...easyLegMovement];
+
+const returnMovements = {
+  knee: exercises[2],
+  hip: exercises[2],
+  ankle: exercises[3],
+  lowerLeg: exercises[3],
+  foot: exercises[3]
+};
+
+function plan({areas, names = [], healthy, acute, achillesRupture, additionalAssessment, bicepsRupture, upperBodyClearance, activityClearance, returnClearance, blocked, phase, location, gear, alert, hold, tattooReady}) {
   const injury = areas.some(area => area !== "tattoo");
   if (alert) return {message:"Sett treningen på pause", detail:"Kontakt legevakt på 116 117 hvis det haster. Ved akutt alvorlige symptomer, ring 113."};
   if (hold) return {message:"Vent med å lage økt", detail:"Følg restriksjonene du har fått fra behandler eller tatovør."};
@@ -344,6 +379,11 @@ function plan({areas, names = [], healthy, acute, achillesRupture, additionalAss
       (!item.gear || item.gear === gear) && !item.tags.some(tag => blocked.includes(tag)));
     return {allowed, rehab:[], mobility:[], achillesHelp};
   }
+  if (bicepsRupture && !additionalAssessment && activityClearance && areas.every(area => upperLimbAreas.has(area))) {
+    const pool = phase === "early" ? easyLegMovement : legWorkout;
+    const allowed = pool.filter(item => !item.tags.some(tag => blocked.includes(tag)));
+    return {allowed, rehab:[], mobility:[], advice:"Følg planen for den skadde armen. Velg beinøvelser du kan gjøre uten grep, armstøtte eller utstyr du må bære."};
+  }
   if (acute) return {
     message: "Følg rådene fra behandleren før trening",
     detail: "Få rask medisinsk vurdering ved mistanke om fersk ruptur eller brudd. Hvis skaden er vurdert, følg aktivitetsplanen fra behandleren."
@@ -353,13 +393,22 @@ function plan({areas, names = [], healthy, acute, achillesRupture, additionalAss
     message:"Du trenger råd tilpasset skaden",
     detail:"Spør en behandler hvilke bevegelser og belastninger som passer før du følger et øktforslag."
   };
-  if (injury && phase === "early") return {message:"Avvent en treningsøkt", detail:"Ved fersk skade må valg av aktivitet ta hensyn til hva som har skjedd og hva du kan belaste. Følg råd fra behandleren."};
+  if (injury && phase === "early" && !activityClearance) return {message:"Avvent en treningsøkt", detail:"Ved fersk skade må valg av aktivitet ta hensyn til hva som har skjedd og hva du kan belaste. Følg råd fra behandleren."};
   const excluded = new Set([...blocked, ...areas.flatMap(area =>
     area === "tattoo" ? tattooFilters[location] : filters[area])]);
   const gentleTattoo = areas.includes("tattoo") && phase === "early";
   if (gentleTattoo && location !== "arm") return {message:"Vent med en strukturert økt", detail:"Følg etterbehandlingen fra tatovøren. Unngå friksjon og trykk på tatoveringen mens den gror."};
   const tattooSession = areas.includes("tattoo") && location === "arm" && (!gentleTattoo || tattooReady);
-  const workout = tattooSession ? tattooWorkout : gentleTattoo ? exercises.slice(0, 1) : [...exercises, ...crossfitExercises];
+  const lowerBodyOnly = areas.length > 0 && areas.every(area => lowerBodyAreas.has(area));
+  const upperLimbOnly = areas.length > 0 && areas.every(area => upperLimbAreas.has(area));
+  let workout = [...exercises, ...crossfitExercises];
+  if (tattooSession) workout = tattooWorkout;
+  else if (gentleTattoo) workout = exercises.slice(0, 1);
+  else if (lowerBodyOnly) workout = seatedUpperBody;
+  else if (upperLimbOnly) workout = legWorkout;
+  if (phase === "early" && injury) {
+    workout = lowerBodyOnly ? seatedUpperBody.filter(item => !item.gear) : upperLimbOnly ? easyLegMovement : [];
+  }
   const allowed = workout.filter(item =>
     (!item.gear || item.gear === gear) &&
     (!item.returnOnly || phase === "return" || healthy) && !item.tags.some(tag => excluded.has(tag)));
@@ -368,7 +417,7 @@ function plan({areas, names = [], healthy, acute, achillesRupture, additionalAss
       area === "tattoo" ? tattooFilters[location] : filters[area])];
     return !item.tags.some(tag => excludedForArea.includes(tag));
   };
-  const rehab = areas.flatMap(area => {
+  const rehab = phase === "early" ? [] : areas.flatMap(area => {
     const movements = [...(rehabExercises[area] ?? [])];
     if (area === "thigh" && names.includes("Bakside lår / hamstring")) {
       movements.push({name:"Lett hælpress", tags:["leg"], dose:"2–3 lette hold", detail:"Bøy kneet litt. Press hælen lett ned uten å bevege beinet, og slipp opp."});
@@ -378,9 +427,12 @@ function plan({areas, names = [], healthy, acute, achillesRupture, additionalAss
     }
     return movements.filter(item => movementFits(item, area));
   });
-  const mobility = healthy ? fullBodyMobility.filter(item => movementFits(item)) :
+  const mobility = phase === "early" ? [] : healthy ? fullBodyMobility.filter(item => movementFits(item)) :
     [...new Set(areas.flatMap(area => (mobilityByArea[area] ?? []).filter(item => movementFits(item, area))))];
-  return {allowed, rehab, mobility, gentleTattoo, tattooSession};
+  const returnToArea = phase === "return" && returnClearance
+    ? [...new Set(areas.filter(area => returnMovements[area] && movementFits(returnMovements[area], area)).map(area => returnMovements[area]))]
+    : [];
+  return {allowed, rehab, mobility, returnToArea, gentleTattoo, tattooSession};
 }
 
 const key = "tren-tilpasset-logg-v1";
@@ -397,11 +449,12 @@ function saveHistory(next) {
 
 let variation = 0;
 function renderPlan() {
-  const {areas, names, healthy, acute, urgent, achillesRupture, additionalAssessment} = readSymptoms(symptomSearch.value);
+  const {areas, names, healthy, acute, urgent, achillesRupture, additionalAssessment, bicepsRupture} = readSymptoms(symptomSearch.value);
   const phase = byId("phase").value;
   const minutes = Number(byId("length").value);
   const result = byId("result");
-  const selection = plan({areas, names, healthy, acute, achillesRupture, additionalAssessment, upperBodyClearance:byId("upperBodyClearance").checked, phase, tattooReady:byId("tattooReady").checked, blocked:selected("restrictions"), location:byId("location").value,
+  const selection = plan({areas, names, healthy, acute, achillesRupture, additionalAssessment, bicepsRupture, activityClearance:byId("activityClearance").checked,
+    returnClearance:byId("returnClearance").checked, upperBodyClearance:byId("upperBodyClearance").checked, phase, tattooReady:byId("tattooReady").checked, blocked:selected("restrictions"), location:byId("location").value,
     gear:byId("gear").value, alert:urgent || byId("alert").checked, hold:byId("hold").checked});
   const labels = [...new Set([...names, ...areas.filter(area => area !== "other").map(area => conditions[area])])];
   const matched = labels.length ? `<p class="meta">Gjenkjent: ${labels.join(" · ")}</p>` :
@@ -412,18 +465,20 @@ function renderPlan() {
   }
   const focus = byId("focus").value;
   const workout = focus === "mobility" || !selection.allowed.length ? null :
-    createWorkout(selection.allowed, minutes, variation, selection.gentleTattoo && !selection.tattooSession);
+    createWorkout(selection.allowed, minutes, variation, selection.gentleTattoo && !selection.tattooSession, phase);
   const rehab = focus === "mobility" ? [] : selection.rehab;
   const mobility = focus === "workout" ? [] : selection.mobility.filter(item => !rehab.includes(item));
-  const advice = selection.achillesHelp ? `<p class="note">${selection.achillesHelp}</p>` : "";
-  if (!workout && !mobility.length && !rehab.length) {
+  const adviceText = selection.achillesHelp || selection.advice;
+  const advice = adviceText ? `<p class="note">${adviceText}</p>` : "";
+  const returnToArea = focus === "mobility" ? [] : selection.returnToArea ?? [];
+  if (!workout && !mobility.length && !rehab.length && !returnToArea.length) {
     result.innerHTML = `${matched}<h2>Ingen øvelser passer</h2>${advice || '<p class="note">Den valgte økttypen har ingen øvelser som passer med fasen og bevegelsene du trenger å skåne.</p>'}`;
     return;
   }
   void fetch("/usage", {method:"POST", credentials:"omit", keepalive:true}).catch(() => {});
   const areasToTrain = areas.filter(area => mobilityByArea[area]).map(area => conditions[area].toLowerCase());
   const mobilityTitle = areasToTrain.length ? `Bevegelighet for ${areasToTrain.join(" og ")}` : "Tøyeprogram";
-  const title = selection.achillesHelp ? "Sittende overkroppsøkt" : workout?.title ?? (mobility.length ? mobilityTitle : "Opptrening");
+  const title = selection.achillesHelp && workout ? "Sittende overkroppsøkt" : workout?.title ?? (mobility.length ? mobilityTitle : "Opptrening");
   const exerciseRow = (item, amount) =>
     `<div class="exercise"><strong>${item.name}</strong><span class="dose">${amount}</span><small>${item.detail}</small></div>`;
   const rehabSection = rehab.length ? `<section class="plan-section"><h3>Opptrening</h3>
@@ -436,12 +491,15 @@ function renderPlan() {
     <p class="subtle">Ta øvelsene i rekkefølge. Bruk rolige bevegelser og hold bare stillingen der øvelsen angir en holdetid.</p>
     ${mobility.map(item => exerciseRow(item, item.dose)).join("")}</section>` :
     focus === "both" && !rehab.length && !advice ? '<p class="subtle">Ingen tøyeøvelser passer med valgene dine.</p>' : "";
+  const returnSection = returnToArea.length ? `<section class="plan-section"><h3>Prøv belastning på området igjen</h3>
+    <p class="subtle">Gjør dette separat fra treningsøkta. Bruk et utslag du allerede tåler.</p>
+    ${returnToArea.map(item => exerciseRow(item, "1 × 3 rolige repetisjoner")).join("")}</section>` : "";
   const tattooNote = areas.includes("tattoo") ? " Unngå trykk og gnissing på tatoveringen, og følg rådene fra tatovøren." : "";
   result.innerHTML = `${matched}<p class="meta">${phases[phase]}</p>
     <h2>${title}</h2><p class="note">${selection.gentleTattoo && !selection.tattooSession ?
       "Hvis etterbehandlingen tillater det, kan du ta en kort, rolig gåtur." :
       "Start lett. Stopp hvis plagene øker underveis, og sjekk hvordan kroppen reagerer samme dag og neste dag."}${tattooNote}</p>
-    ${advice}${rehabSection}${workoutSection}${mobilitySection}
+    ${advice}${rehabSection}${workoutSection}${returnSection}${mobilitySection}
     <label class="check">Hvordan gikk økten?<select id="feedback"><option value="">Velg respons</option><option value="Gikk fint">Gikk fint</option><option value="Ubehag">Ubehag</option><option value="Stoppet økten">Stoppet økten</option></select></label>
     <button class="primary" id="save" type="button">Lagre i loggen</button><p id="saveStatus" role="status"></p>`;
   const nextWorkout = byId("nextWorkout");
@@ -454,7 +512,7 @@ function renderPlan() {
     const feedback = byId("feedback").value;
     if (!feedback) { byId("feedback").focus(); return; }
     const ok = saveHistory([{title, areas:areas.map(area => conditions[area]).join(" · "), phase:phases[phase],
-      feedback, date:new Date().toISOString(), exercises:[...rehab, ...(workout?.items ?? []), ...mobility].map(item => item.name)}, ...history]);
+      feedback, date:new Date().toISOString(), exercises:[...rehab, ...(workout?.items ?? []), ...returnToArea, ...mobility].map(item => item.name)}, ...history]);
     byId("saveStatus").textContent = ok ? "Økten er lagret." : "Kunne ikke lagre økten på denne enheten.";
     if (ok) byId("save").disabled = true;
   };
@@ -516,5 +574,7 @@ symptomSearch.addEventListener("input", () => {
   if (tattooLocation) byId("location").value = tattooLocation;
   byId("tattooReady").checked = false;
   byId("upperBodyClearance").checked = false;
+  byId("activityClearance").checked = false;
+  byId("returnClearance").checked = false;
   resetResult();
 });
