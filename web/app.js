@@ -258,8 +258,8 @@ const exercises = [
   {name:"Rolige skulderbladbevegelser", tags:["arm"], dose:"6–8 repetisjoner", detail:"Sitt eller stå med armene avslappet. Før skulderbladene forsiktig sammen og slipp."},
   {name:"Sett deg og reis deg fra en stol", tags:["load","squat","leg"], dose:"5–8 repetisjoner", detail:"Bruk en stabil stol og hold armene avslappet. Beveg deg rolig."},
   {name:"Stående tåhev", tags:["load","leg"], dose:"6–10 repetisjoner", detail:"Løft hælene rolig med begge føtter på gulvet. Stå nær en vegg om du trenger balanse."},
-  {name:"Sittende lett bicepscurl", tags:["grip","arm","weighted"], gear:"free", returnOnly:true, dose:"6–8 repetisjoner", detail:"Hold albuene ved siden av kroppen og velg en lett manual."},
-  {name:"Knebøy med lette manualer langs siden", tags:["load","squat","leg","grip","arm","weighted"], gear:"free", returnOnly:true, dose:"5–8 repetisjoner", detail:"Bruk et bevegelsesutslag du allerede tåler og en lett belastning."},
+  {name:"Sittende lett bicepscurl", tags:["grip","arm","weighted"], gear:"dumbbell", returnOnly:true, dose:"6–8 repetisjoner", detail:"Hold albuene ved siden av kroppen og velg en lett manual."},
+  {name:"Knebøy med lette manualer langs siden", tags:["load","squat","leg","grip","arm","weighted"], gear:"dumbbell", returnOnly:true, dose:"5–8 repetisjoner", detail:"Bruk et bevegelsesutslag du allerede tåler og en lett belastning."},
   {name:"Rolig håndåpning", tags:["arm","handMotion"], dose:"6–8 repetisjoner", detail:"Sitt med avslappede skuldre. Åpne og lukk hånden rolig."}
 ];
 
@@ -278,9 +278,69 @@ const crossfitExercises = [
   {name:"Knebøy til stol", tags:["load","squat","leg"], dose:"5–8 repetisjoner", detail:"Sett deg kontrollert mot en stødig stol, og reis deg rolig."},
   {name:"Armheving mot vegg", tags:["arm","support","load","torso"], dose:"5–8 repetisjoner", detail:"Stå mot en vegg. Bøy albuene og skyv rolig fra."},
   {name:"Sittende utadrotasjon uten vekt", tags:["arm"], dose:"5–8 repetisjoner", detail:"Hold albuene inntil kroppen og før underarmene rolig litt ut."},
-  {name:"Sittende skulderpress med manualer", tags:["arm","overhead","grip","weighted"], gear:"free", returnOnly:true, dose:"5–8 repetisjoner", detail:"Bruk lette manualer og et utslag du allerede tåler."},
+  {name:"Sittende skulderpress med manualer", tags:["arm","overhead","grip","weighted"], gear:"dumbbell", returnOnly:true, dose:"5–8 repetisjoner", detail:"Bruk lette manualer og et utslag du allerede tåler."},
   {name:"Tå- og hælløft med støtte", tags:["load","leg","support"], dose:"5–8 repetisjoner", detail:"Hold lett i noe stødig. Løft hælene, senk dem og løft deretter tærne."}
 ];
+
+const crossfitBodyweight = [
+  {name:"Knebøy med kroppsvekt", tags:["load","leg","squat"], normalOnly:true, dose:"8 repetisjoner",
+    detail:"Hold føttene i gulvet. Senk deg kontrollert og reis deg helt opp."},
+  {name:"Armheving på gulv", tags:["arm","support","load","torso"], normalOnly:true, dose:"5–8 repetisjoner",
+    detail:"Hold overkroppen samlet. Senk brystet kontrollert og skyv fra gulvet."},
+  {name:"Sit-up", tags:["bend","torso","leg"], normalOnly:true, dose:"6–8 repetisjoner",
+    detail:"Ligg med bøyde knær. Løft overkroppen rolig og senk den kontrollert."},
+  {name:"Burpee med steg", tags:["load","leg","squat","bend","arm","support","torso"], normalOnly:true, dose:"4–6 repetisjoner",
+    detail:"Sett hendene i gulvet og steg tilbake til plankeposisjon. Steg fram og reis deg uten hopp."},
+  {name:"Planke på underarmene", tags:["arm","support","load","torso"], normalOnly:true, dose:"15–20 sek",
+    detail:"Støtt deg på underarmer og tær. Hold kroppen i en rett linje og pust rolig."}
+];
+
+const weightedExercises = [
+  {name:"Manualroing med støtte", gear:"dumbbell", tags:["arm","grip","support","weighted","bend","load"], normalOnly:true,
+    dose:"6 per side", detail:"Støtt den ledige hånden på en benk. Trekk manualen rolig mot hoften."},
+  {name:"Gulvpress med manualer", gear:"dumbbell", tags:["arm","grip","weighted","torso"], normalOnly:true,
+    dose:"6–8 repetisjoner", detail:"Ligg på ryggen. La overarmene berøre gulvet lett før du presser manualene opp."},
+  {name:"Rumensk markløft med manualer", gear:"dumbbell", tags:["arm","grip","weighted","bend","load","leg"], normalOnly:true,
+    dose:"6–8 repetisjoner", detail:"Skyv hoftene bakover med lett bøy i knærne. Senk manualene tett inntil beina."},
+  {name:"Bakoverutfall med manualer", gear:"dumbbell", tags:["arm","grip","weighted","load","leg","squat"], normalOnly:true,
+    dose:"4 per side", detail:"Hold manualene langs siden. Ta et kontrollert steg bakover og reis deg igjen."},
+  {name:"Farmer’s carry med manualer", gear:"dumbbell", tags:["arm","grip","weighted","load","leg","torso"], normalOnly:true,
+    dose:"20 sek", detail:"Gå rolig med en manual i hver hånd. Hold kroppen oppreist."},
+  {name:"Thruster med manualer", gear:"dumbbell", tags:["arm","grip","weighted","load","leg","squat","overhead"], normalOnly:true, technical:true,
+    dose:"4–6 repetisjoner", detail:"Start med lette manualer ved skuldrene. Reis deg fra knebøyen og press manualene opp."},
+  {name:"Enarms manualsnatch", gear:"dumbbell", tags:["arm","grip","weighted","load","leg","bend","overhead"], normalOnly:true, technical:true,
+    dose:"3 per side", detail:"Bruk en lett manual og teknikk du har øvd på. Hold manualen tett inntil kroppen på vei opp."},
+  {name:"Goblet squat med kettlebell", gear:"kettlebell", tags:["arm","grip","weighted","load","leg","squat","torso"], normalOnly:true,
+    dose:"6–8 repetisjoner", detail:"Hold kula foran brystet. Senk deg kontrollert og reis deg igjen."},
+  {name:"Markløft med kettlebell", gear:"kettlebell", tags:["arm","grip","weighted","load","leg","bend"], normalOnly:true,
+    dose:"6–8 repetisjoner", detail:"Hold kula mellom føttene. Skyv hoftene bakover, og reis deg med kula tett inntil kroppen."},
+  {name:"Kettlebell-sving til brysthøyde", gear:"kettlebell", tags:["arm","grip","weighted","load","leg","bend","torso"], normalOnly:true, technical:true,
+    dose:"5–6 repetisjoner", detail:"Bruk en lett kule og driv bevegelsen med hoftene. La armene følge kula."},
+  {name:"Kettlebell suitcase carry", gear:"kettlebell", tags:["arm","grip","weighted","load","leg","torso"], normalOnly:true,
+    dose:"15–20 sek per side", detail:"Gå rolig med kula i én hånd. Hold skuldrene jevne og bytt hånd."},
+  {name:"Kettlebell clean", gear:"kettlebell", tags:["arm","grip","weighted","load","leg","bend","torso"], normalOnly:true, technical:true,
+    dose:"3 per side", detail:"Bruk en lett kule. Før den tett inntil kroppen opp i rackposisjon med kontroll."},
+  {name:"Markløft med stang", gear:"barbell", tags:["arm","grip","weighted","load","leg","bend","torso"], normalOnly:true,
+    dose:"5–6 repetisjoner", detail:"Bruk lett stang. Hold stanga nær kroppen og senk den kontrollert."},
+  {name:"Frontbøy med stang", gear:"barbell", tags:["arm","grip","weighted","load","leg","squat","torso"], normalOnly:true,
+    dose:"5–6 repetisjoner", detail:"Hvil stanga foran på skuldrene. Hold albuene oppe og reis deg rolig fra bøyen."},
+  {name:"Knebøy med stang på ryggen", gear:"barbell", tags:["arm","grip","weighted","load","leg","squat","torso"], normalOnly:true,
+    dose:"5–6 repetisjoner", detail:"Bruk stativ og lett stang. Senk deg kontrollert og reis deg igjen."},
+  {name:"Skulderpress med stang", gear:"barbell", tags:["arm","grip","weighted","load","leg","overhead","torso"], normalOnly:true,
+    dose:"5–6 repetisjoner", detail:"Start med stanga ved skuldrene. Press rett opp uten å bruke beina."},
+  {name:"Push press med stang", gear:"barbell", tags:["arm","grip","weighted","load","leg","squat","overhead","torso"], normalOnly:true, technical:true,
+    dose:"4–5 repetisjoner", detail:"Start med lett stang ved skuldrene. Gjør en liten knebøy og bruk kraften fra beina i presset."},
+  {name:"Hang power clean med stang", gear:"barbell", tags:["arm","grip","weighted","load","leg","bend","torso"], normalOnly:true, technical:true,
+    dose:"3 repetisjoner", detail:"Bruk lett stang og kjent teknikk. Start ved lårene og ta imot stanga foran på skuldrene."},
+  {name:"Push jerk med stang", gear:"barbell", tags:["arm","grip","weighted","load","leg","squat","overhead","torso"], normalOnly:true, technical:true,
+    dose:"3 repetisjoner", detail:"Bruk lett stang og kjent teknikk. Ta imot stanga over hodet med lett bøy i knærne."},
+  {name:"Hang power snatch med stang", gear:"barbell", tags:["arm","grip","weighted","load","leg","bend","overhead","torso"], normalOnly:true, technical:true,
+    dose:"3 repetisjoner", detail:"Bruk lett stang og kjent teknikk. Start ved lårene og ta imot stanga over hodet med kontroll."}
+];
+
+function equipmentFits(item, gear) {
+  return !item.gear || gear === "free" || item.gear === gear;
+}
 
 const fullBodyMobility = [
   {name:"Bryststrekk i døråpning", tags:["arm","support","load","torso"], dose:"20 sek per side", detail:"Hvil underarmen lett mot karmen. Ta et lite steg fram til du kjenner en mild strekk."},
@@ -306,7 +366,13 @@ function selectWorkoutItems(pool, preferredSize, index) {
   // Keep at least one eligible movement available for the next combination.
   const size = pool.length > 2 ? Math.min(preferredSize, pool.length - 1) : pool.length;
   const start = index % pool.length;
-  return [...pool.slice(start), ...pool.slice(0, start)].slice(0, size);
+  const ordered = [...pool.slice(start), ...pool.slice(0, start)];
+  const items = ordered.slice(0, size);
+  if (!items.some(item => item.gear)) {
+    const weighted = ordered.find(item => item.gear);
+    if (weighted) items[items.length - 1] = weighted;
+  }
+  return items;
 }
 
 function createWorkout(allowed, minutes, index, gentleTattoo, phase) {
@@ -328,6 +394,11 @@ function createWorkout(allowed, minutes, index, gentleTattoo, phase) {
     return {title:"Rolig økt", items:allowed, instruction:"Ta én øvelse av gangen med pause imellom.", amount:item => item.dose};
   }
   const items = selectWorkoutItems(timed, minutes === 10 ? 2 : 3, index);
+  if (items.some(item => item.technical)) {
+    return {title:"Teknikk og styrke", items, canVary:timed.length > items.length,
+      instruction:"Gjør øvelsene i rekkefølge. Bruk lett belastning, hvil 60–90 sekunder mellom settene, og ta opptil tre runder. Velg en annen økt hvis du ikke kjenner teknikken.",
+      amount:item => item.dose};
+  }
   const format = workoutFormats[index % workoutFormats.length];
   return {title:format.name, items, canVary:timed.length > items.length, instruction:format.instruction(minutes, items.length), amount:format.amount};
 }
@@ -393,19 +464,29 @@ const mobilityByArea = {
 };
 
 const seatedUpperBody = [
+  {name:"Sittende hammercurl med manualer", tags:["arm","grip","weighted"], gear:"dumbbell", dose:"6–8 repetisjoner",
+    detail:"Sitt med rygg og skadd bein støttet. Bøy albuene med håndflatene vendt mot hverandre."},
+  {name:"Sittende fronthev med manualer", tags:["arm","grip","weighted"], gear:"dumbbell", returnOnly:true, dose:"5–6 repetisjoner",
+    detail:"Støtt ryggen og beinet. Løft én lett manual fram til under skulderhøyde, og senk rolig."},
+  {name:"Sittende skulderpress med manualer", tags:["arm","grip","weighted","overhead"], gear:"dumbbell", returnOnly:true, dose:"5–6 repetisjoner",
+    detail:"Sitt med ryggstøtte og la det skadde beinet hvile. Press lette manualer opp uten å skyve fra med føttene."},
+  {name:"Sittende bicepscurl med kettlebell", tags:["arm","grip","weighted"], gear:"kettlebell", dose:"5–8 repetisjoner",
+    detail:"La beinet hvile. Hold en lett kule med begge hender og bøy albuene. Ha kula innen rekkevidde før du begynner."},
+  {name:"Sittende brystpress fram med kettlebell", tags:["arm","grip","weighted"], gear:"kettlebell", returnOnly:true, dose:"5–6 repetisjoner",
+    detail:"Sitt med støttet rygg og bein. Før en lett kule kort fram fra brystet med begge hender og trekk den tilbake."},
   {name:"Sittende skulderbladsklem", tags:["arm"], dose:"5–8 repetisjoner",
     detail:"Sitt med ryggstøtte og det skadde beinet støttet. Trekk skulderbladene lett sammen."},
   {name:"Sittende albuebøy", tags:["arm"], dose:"5–8 repetisjoner",
     detail:"Hold overarmene langs siden. Bøy og strekk albuene uten vekt. La det skadde beinet hvile."},
   {name:"Sittende utadrotasjon", tags:["arm"], dose:"5–8 repetisjoner",
     detail:"Hold albuene bøyd inntil siden. Før underarmene litt ut og inn med avslappede skuldre."},
-  {name:"Sittende bicepscurl med lette manualer", tags:["arm","grip","weighted"], gear:"free", dose:"5–8 repetisjoner",
+  {name:"Sittende bicepscurl med lette manualer", tags:["arm","grip","weighted"], gear:"dumbbell", dose:"5–8 repetisjoner",
     detail:"Bruk bare manualer du kan få tak i fra stolen. Hold ryggen og det skadde beinet støttet hele tiden."},
   {name:"Sittende håndflatepress", tags:["arm"], dose:"5–6 lette hold",
     detail:"Sitt med ryggstøtte og beinet støttet. Press håndflatene lett mot hverandre foran brystet, og slipp opp."},
   {name:"Sittende rekkeøvelse", tags:["arm"], dose:"5–8 repetisjoner per side",
     detail:"Sitt støtt. Før én hånd rolig fram i brysthøyde, og før den tilbake uten å lene deg eller skyve med føttene."},
-  {name:"Sittende sidehev med lette manualer", tags:["arm","grip","weighted"], gear:"free", returnOnly:true, dose:"5–8 repetisjoner",
+  {name:"Sittende sidehev med lette manualer", tags:["arm","grip","weighted"], gear:"dumbbell", returnOnly:true, dose:"5–8 repetisjoner",
     detail:"Sitt med støtte for rygg og bein. Løft armene litt ut til siden med lette manualer og senk rolig."},
   {name:"Sittende armsirkler under skulderhøyde", tags:["arm"], returnOnly:true, dose:"15 sek",
     detail:"Sitt med kroppen støttet og føttene i ro. Før armene i små sirkler uten vekt."}
@@ -442,7 +523,7 @@ function plan({areas, names = [], healthy, acute, achillesRupture, additionalAss
         detail:"Få rask medisinsk vurdering hvis skaden er fersk og ikke er undersøkt. Etter vurdering kan du velge opptrening og bekrefte at du har fått klarsignal til sittende overkroppstrening."};
     }
     const allowed = seatedUpperBody.filter(item =>
-      (!item.gear || item.gear === gear) && (!item.returnOnly || phase === "return") &&
+      equipmentFits(item, gear) && (!item.returnOnly || phase === "return") &&
       !item.tags.some(tag => blocked.includes(tag)));
     return {allowed, rehab:[], mobility:[], achillesHelp};
   }
@@ -469,7 +550,7 @@ function plan({areas, names = [], healthy, acute, achillesRupture, additionalAss
   const lowerBodyOnly = areas.length > 0 && areas.every(area => lowerBodyAreas.has(area));
   const upperLimbOnly = areas.length > 0 && areas.every(area => upperLimbAreas.has(area));
   const neckOrBackOnly = areas.length > 0 && areas.every(area => area === "neck" || area === "back");
-  let workout = [...exercises, ...crossfitExercises];
+  let workout = [...exercises, ...crossfitExercises, ...crossfitBodyweight, ...weightedExercises];
   if (tattooSession) workout = tattooWorkout;
   else if (gentleTattoo) workout = exercises.slice(0, 1);
   else if (lowerBodyOnly) workout = seatedUpperBody;
@@ -479,8 +560,8 @@ function plan({areas, names = [], healthy, acute, achillesRupture, additionalAss
     workout = lowerBodyOnly ? seatedUpperBody.filter(item => !item.gear) : upperLimbOnly ? easyLegMovement : neckOrBackOnly ? supportedForNeckOrBack.filter(item => !item.returnOnly) : [];
   }
   const allowed = workout.filter(item =>
-    (!item.gear || item.gear === gear) &&
-    (!item.returnOnly || phase === "return" || healthy) && !item.tags.some(tag => excluded.has(tag)));
+    equipmentFits(item, gear) &&
+    (!item.normalOnly || healthy) && (!item.returnOnly || phase === "return" || healthy) && !item.tags.some(tag => excluded.has(tag)));
   const movementFits = (item, target) => {
     const excludedForArea = [...blocked, ...areas.filter(area => area !== target).flatMap(area =>
       area === "tattoo" ? tattooFilters[location] : filters[area])];
@@ -550,8 +631,10 @@ function renderPlan() {
   const rehabSection = rehab.length ? `<section class="plan-section"><h3>Opptrening</h3>
     <p class="subtle">Gjør bevegelsene rolig hvis de passer med opplegget fra behandleren.</p>
     ${rehab.map(item => exerciseRow(item, item.dose)).join("")}</section>` : "";
+  const equipmentNote = workout && byId("gear").value !== "body" && !workout.items.some(item => item.gear)
+    ? '<p class="subtle">Appen fant ingen frivektøvelser som passer med disse valgene. Økta bruker kroppsvekt.</p>' : "";
   const workoutSection = workout ? `<section class="plan-section"><h3>${selection.achillesHelp ? "Økt uten belastning på den skadde foten" : "Trening rundt skaden"}</h3><p class="subtle">${selection.achillesHelp ? workout.title + ". " : ""}${workout.instruction}</p>
-    ${workout.items.map(item => exerciseRow(item, workout.amount(item))).join("")}
+    ${equipmentNote}${workout.items.map(item => exerciseRow(item, workout.amount(item))).join("")}
     ${workout.canVary ? '<button class="remove" id="nextWorkout" type="button">Vis en annen treningsøkt</button>' : ""}</section>` : "";
   const mobilitySection = mobility.length ? `<section class="plan-section">${title === mobilityTitle ? "" : `<h3>${mobilityTitle}</h3>`}
     <p class="subtle">Ta øvelsene i rekkefølge. Bruk rolige bevegelser og hold bare stillingen der øvelsen angir en holdetid.</p>
