@@ -22,11 +22,11 @@
 </select>
 <label class="phase-label" for="focus">Hva vil du ha?</label>
 <select id="focus">
-  <option value="workout">Tren rundt skaden</option>
+  <option value="workout">Lett CrossFit rundt skaden</option>
   <option value="mobility">Opptrening og bevegelighet for området</option>
   <option value="both">Vis begge, hver for seg</option>
 </select>
-<p class="symptom-help">Standardøkta bruker andre kroppsdeler, så skadestedet kan holdes i ro. Velg opptrening separat hvis du vil se øvelser for selve området.</p>
+<p class="symptom-help">Standardøkta er lett CrossFit med manualer der skaden tillater det. Velg opptrening separat for å se veiledning om selve skaden.</p>
 <label id="locationField" class="phase-label" hidden>Hvor sitter tatoveringen?
   <select id="location"><option value="arm">Underarm / arm</option><option value="leg">Bein / fot</option><option value="torso">Rygg / bryst / mage</option><option value="other">Annet sted</option></select>
 </label>
@@ -42,7 +42,7 @@
 <button class="primary" type="submit">Vis økt</button>
 <details class="workout-options"><summary>Tilpass utstyr og bevegelser</summary>
   <div class="fields">
-    <label>Utstyr<select id="gear"><option value="body">Kroppsvekt</option><option value="free">Alle frivekter</option><option value="dumbbell">Manualer</option><option value="kettlebell">Kettlebell</option><option value="barbell">Vektstang</option></select></label>
+    <label>Utstyr<select id="gear"><option value="body">Kroppsvekt</option><option value="free">Alle frivekter</option><option value="dumbbell" selected>Manualer</option><option value="kettlebell">Kettlebell</option><option value="barbell">Vektstang</option></select></label>
     <label>Øktlengde<select id="length"><option value="10">Ca. 10 min</option><option selected value="15">Ca. 15 min</option><option value="20">Ca. 20 min</option></select></label>
   </div>
   <fieldset><legend>Bevegelser du vil unngå</legend><div class="choices" id="restrictions"></div></fieldset>

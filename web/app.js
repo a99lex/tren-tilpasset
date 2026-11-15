@@ -263,8 +263,6 @@ const exercises = [
   {name:"Rolig håndåpning", tags:["arm","handMotion"], dose:"6–8 repetisjoner", detail:"Sitt med avslappede skuldre. Åpne og lukk hånden rolig."}
 ];
 
-const armBend = {name:"Albuebøy uten vekt", tags:["arm"], dose:"2–3 repetisjoner", detail:"Hold overarmen inntil kroppen. Bøy og strekk albuen rolig så langt det kjennes greit."};
-const thighSlide = {name:"Hælglidning med støtte", tags:["leg"], dose:"2–3 repetisjoner", detail:"La beinet hvile på underlaget. Trekk hælen rolig inn mot deg og skyv den ut igjen."};
 const tattooWorkout = [
   {name:"Rolig knebøy med kroppsvekt", tags:["load","squat","leg"], dose:"1 × 6–8", detail:"Sett deg rolig bakover og ned før du reiser deg. Hold armene avslappet."},
   {name:"Oppsteg på lav kasse", tags:["load","leg"], dose:"1 × 4–6 per side", detail:"Gå opp på et lavt, stødig trinn. Bytt bein og hold jevnt tempo."},
@@ -375,17 +373,23 @@ function selectWorkoutItems(pool, preferredSize, index) {
   return items;
 }
 
-function createWorkout(allowed, minutes, index, gentleTattoo, phase) {
-  if (["early", "recovery"].includes(phase) && !gentleTattoo) {
-    const items = selectWorkoutItems(allowed, phase === "early" || minutes === 10 ? 2 : 3, index);
-    return {title:phase === "early" ? "Hold kroppen i gang" : "Tren rundt skaden",
-      items, canVary:allowed.length > items.length, instruction:phase === "early"
-        ? "Gjør hver øvelse én gang i rolig tempo. Ta pauser underveis."
-        : "Gjør ett kontrollert sett av hver øvelse. Hvil minst ett minutt mellom øvelsene.",
-      amount:item => item.dose};
+function createWorkout(allowed, minutes, index, gentleTattoo, phase, protectInjury = phase !== "normal") {
+  if (gentleTattoo) {
+    return {title:"Rolig aktivitet", items:allowed,
+      instruction:"Hold et rolig tempo.", amount:item => item.dose};
   }
-  if (gentleTattoo || allowed.length < 2) {
-    return {title:gentleTattoo ? "Rolig aktivitet" : "Én øvelse denne gangen", items:allowed,
+  if (protectInjury) {
+    const items = selectWorkoutItems(allowed, phase === "early" || minutes === 10 ? 2 : 3, index);
+    return {title:"Lett CrossFit rundt skaden", items, canVary:allowed.length > items.length,
+      instruction:"Ta én rolig runde. Hvil minst ett minutt mellom øvelsene. Bruk lette vekter du håndterer uten anstrengelse og uten å bruke skadestedet. Dropp øvelsen hvis du må bruke skadestedet for å løfte, stabilisere eller komme i posisjon.",
+      amount:item => {
+        if (item.dose.includes("min")) return "2 min rolig";
+        if (/sek|hold/.test(item.dose)) return "10 sek rolig";
+        return item.dose.includes("per side") ? "3 rolige repetisjoner per side" : "4 rolige repetisjoner";
+      }};
+  }
+  if (allowed.length < 2) {
+    return {title:"Én øvelse denne gangen", items:allowed,
       instruction:"Hold et rolig tempo.", amount:item => item.dose};
   }
   const timed = allowed.filter(item => !item.dose.includes("min"));
@@ -403,65 +407,45 @@ function createWorkout(allowed, minutes, index, gentleTattoo, phase) {
   return {title:format.name, items, canVary:timed.length > items.length, instruction:format.instruction(minutes, items.length), amount:format.amount};
 }
 
-const rehabExercises = {
-  hand: [exercises.find(item => item.tags.includes("handMotion"))],
-  forearm: [{name:"Vri håndflaten opp og ned", tags:["arm"], dose:"2–3 hver vei", detail:"Hold albuen bøyd inntil kroppen. Vri underarmen rolig slik at håndflaten vender opp og ned."}],
-  upperArm: [armBend],
-  arm: [armBend],
-  thigh: [thighSlide],
-  neck: [
-    {name:"Sittende hodevending", tags:["neckTurn"], dose:"2–3 hver vei", detail:"Sitt oppreist og vend hodet rolig litt til hver side."},
-    {name:"Små nikk", tags:["neckTurn"], dose:"2–3 repetisjoner", detail:"Sitt oppreist. Nikk lett og gå tilbake til midtstilling."}
-  ],
-  back: [
-    {name:"Bekkenvipp", tags:["bend","leg","torso"], dose:"2–3 repetisjoner", detail:"Ligg med bøyde knær. Vipp bekkenet lett så korsryggen flater ut. Slapp av igjen."}
-  ],
-  knee: [
-    {name:"Sittende knestrekk", tags:["leg"], dose:"2–3 per side", detail:"Sitt stødig. Strekk ett kne rolig så langt det kjennes greit, og senk foten. Bruk kroppsvekt."}
-  ],
-  ankle: [
-    {name:"Sittende ankelbøy", tags:["leg"], dose:"2–3 repetisjoner", detail:"Støtt foten og vipp tærne rolig mot deg og fra deg innenfor et behagelig utslag."}
-  ],
-  shoulder: [
-    {name:"Skulderpendel med støtte", tags:["arm","bend","support","load"], dose:"2–3 små pendelbevegelser", detail:"Støtt deg med den andre hånden mot et stødig underlag. La armen henge og pendle forsiktig."},
-    {name:"Sittende skulderbladsklem", tags:["arm"], dose:"2–3 repetisjoner", detail:"La armene henge avslappet. Trekk skulderbladene lett sammen og slipp opp."}
-  ],
-  elbow: [
-    {name:"Albuebøy", tags:["arm"], dose:"2–3 repetisjoner", detail:"Hold overarmen inntil kroppen. Bøy og strekk albuen rolig uten vekt."}
-  ],
-  wrist: [
-    {name:"Håndleddsbøy med støtte", tags:["arm"], dose:"2–3 repetisjoner", detail:"Hvil underarmen på et bord med hånden over kanten. Løft og senk hånden rolig."}
-  ],
-  hip: [
-    {name:"Stående hofteføring bakover", tags:["load","leg","support"], dose:"2–3 per side", detail:"Hold i noe stødig. Før ett bein litt bakover og hold overkroppen oppreist."}
-  ],
-  lowerLeg: [
-    {name:"Sittende ankelbevegelse", tags:["leg"], dose:"2–3 repetisjoner", detail:"Støtt leggen og vipp foten rolig fram og tilbake uten motstand."}
-  ]
+// General movement examples from NHS Inform for uncomplicated symptoms only.
+const gentleMobility = {
+  neck: {
+    names:["Nakkesmerter"],
+    exercise:{name:"Sittende hodevending", tags:["neckTurn"], dose:"2–3 rolige repetisjoner",
+      detail:"Sitt støttet. Snu hodet forsiktig mot én side så langt det kjennes greit. Gå via midten til den andre siden."}
+  },
+  back: {
+    names:["Korsryggsmerter"],
+    exercise:{name:"Bekkenvipp", tags:["bend","leg","torso"], dose:"2–3 rolige repetisjoner",
+      detail:"Ligg med bøyde knær. Vipp bekkenet forsiktig så korsryggen flater litt ut, og gå tilbake til utgangsstillingen."}
+  }
 };
 
-const mobilityByArea = {
-  neck: [
-    rehabExercises.neck[0],
-    {name:"Rolig sidebøy i nakken", tags:["neckTurn"], dose:"2–3 ganger per side",
-      detail:"Sitt oppreist. Vipp hodet litt mot én skulder, og gå rolig tilbake til midten. Bruk et utslag du tåler."}
-  ],
-  back: rehabExercises.back,
-  shoulder: rehabExercises.shoulder,
-  elbow: rehabExercises.elbow,
-  forearm: rehabExercises.forearm,
-  upperArm: rehabExercises.upperArm,
-  arm: rehabExercises.arm,
-  wrist: rehabExercises.wrist,
-  hand: rehabExercises.hand,
-  hip: rehabExercises.hip,
-  thigh: rehabExercises.thigh,
-  knee: rehabExercises.knee,
-  lowerLeg: rehabExercises.lowerLeg,
-  ankle: rehabExercises.ankle,
-  foot: [{name:"Rolig bevegelse av tærne", tags:["leg"], dose:"2–3 repetisjoner",
-    detail:"Sitt med foten støttet. Bøy og strekk tærne lett innenfor et utslag du tåler."}]
+const rehabLinks = {
+  achilles: {label:"Helse Bergen om akillesseneruptur", url:"https://www.helse-bergen.no/4ab228/contentassets/0273bd943ecc45fa9a9d131414371b33/akillesseneruptur---pasientbrosjyre-2025.pdf",
+    note:"Følg planen for ortose og belastning fra avdelingen eller fysioterapeuten."},
+  biceps: {label:"AAOS om bicepsseneruptur ved albuen", url:"https://orthoinfo.aaos.org/bodypart/elbow/biceps-tendon-tear-at-the-elbow/",
+    note:"Hvor senen er skadet, og om den er operert, påvirker når du kan bruke armen igjen."},
+  jumper: {label:"Fysioterapi ved hopperkne (Kingston and Richmond NHS)", url:"https://www.kingstonandrichmond.nhs.uk/patients-and-families/patient-leaflets/patellar-tendinopathy",
+    note:"Bruk planen for gradvis senebelastning fra fysioterapeuten."},
+  hamstring: {label:"NHS om hamstringskader", url:"https://www.nhs.uk/conditions/hamstring-injury/",
+    note:"Fysioterapeuten kan velge øvelser ut fra hvor skaden sitter og hva låret tåler."},
+  neck: {label:"NHS Inform om nakkeøvelser", url:"https://www.nhsinform.scot/illnesses-and-conditions/muscle-bone-and-joints/neck-and-back-problems-and-conditions/exercises-for-neck-problems/"},
+  back: {label:"NHS Inform om ryggøvelser", url:"https://www.nhsinform.scot/illnesses-and-conditions/muscle-bone-and-joints/neck-and-back-problems-and-conditions/exercises-for-back-pain/"},
+  shoulder: {label:"NHS Inform om skulderøvelser", url:"https://www.nhsinform.scot/illnesses-and-conditions/muscle-bone-and-joints/arm-shoulder-and-hand-problems-and-conditions/exercises-for-shoulder-problems/"},
+  elbow: {label:"NHS Inform om albueøvelser", url:"https://www.nhsinform.scot/illnesses-and-conditions/muscle-bone-and-joints/arm-shoulder-and-hand-problems-and-conditions/exercises-for-elbow-problems/"},
+  knee: {label:"NHS Inform om kneøvelser", url:"https://www.nhsinform.scot/illnesses-and-conditions/muscle-bone-and-joints/leg-and-foot-problems-and-conditions/exercises-for-knee-problems/"}
 };
+
+function rehabSources(symptoms) {
+  if (symptoms.achillesRupture) return [rehabLinks.achilles];
+  if (symptoms.bicepsRupture) return [rehabLinks.biceps];
+  return symptoms.areas.map(area => {
+    if (area === "knee" && symptoms.names.includes("Hopperkne")) return rehabLinks.jumper;
+    if (area === "thigh" && symptoms.names.includes("Bakside lår / hamstring")) return rehabLinks.hamstring;
+    return rehabLinks[area];
+  }).filter(Boolean);
+}
 
 const seatedUpperBody = [
   {name:"Sittende hammercurl med manualer", tags:["arm","grip","weighted"], gear:"dumbbell", dose:"6–8 repetisjoner",
@@ -525,12 +509,12 @@ function plan({areas, names = [], healthy, acute, achillesRupture, additionalAss
     const allowed = seatedUpperBody.filter(item =>
       equipmentFits(item, gear) && (!item.returnOnly || phase === "return") &&
       !item.tags.some(tag => blocked.includes(tag)));
-    return {allowed, rehab:[], mobility:[], achillesHelp};
+    return {allowed, mobility:[], achillesHelp};
   }
   if (bicepsRupture && !additionalAssessment && activityClearance && areas.every(area => upperLimbAreas.has(area))) {
     const pool = phase === "early" ? easyLegMovement : legWorkout.filter(item => !item.returnOnly);
     const allowed = pool.filter(item => !item.tags.some(tag => blocked.includes(tag)));
-    return {allowed, rehab:[], mobility:[], advice:"Følg planen for den skadde armen. Velg beinøvelser du kan gjøre uten grep, armstøtte eller utstyr du må bære."};
+    return {allowed, mobility:[], advice:"Følg planen for den skadde armen. Velg beinøvelser du kan gjøre uten grep, armstøtte eller utstyr du må bære."};
   }
   if (acute) return {
     message: "Følg rådene fra behandleren før trening",
@@ -567,19 +551,11 @@ function plan({areas, names = [], healthy, acute, achillesRupture, additionalAss
       area === "tattoo" ? tattooFilters[location] : filters[area])];
     return !item.tags.some(tag => excludedForArea.includes(tag));
   };
-  const rehab = phase === "early" ? [] : areas.flatMap(area => {
-    const movements = [...(rehabExercises[area] ?? [])];
-    if (area === "thigh" && names.includes("Bakside lår / hamstring")) {
-      movements.push({name:"Lett hælpress", tags:["leg"], dose:"2–3 lette hold", detail:"Bøy kneet litt. Press hælen lett ned uten å bevege beinet, og slipp opp."});
-    }
-    if (area === "thigh" && names.includes("Forside lår / quadriceps")) {
-      movements.push({name:"Lett lårspenn", tags:["leg"], dose:"2–3 lette hold", detail:"Støtt beinet. Press knehasen lett ned i et håndkle, og slipp opp."});
-    }
-    return movements.filter(item => movementFits(item, area));
-  });
-  const mobility = phase === "early" ? [] : healthy ? fullBodyMobility.filter(item => movementFits(item)) :
-    [...new Set(areas.flatMap(area => (mobilityByArea[area] ?? []).filter(item => movementFits(item, area))))];
-  return {allowed, rehab, mobility, gentleTattoo, tattooSession};
+  const general = areas.length === 1 ? gentleMobility[areas[0]] : undefined;
+  const describedGeneralSymptoms = general && names.length > 0 && names.every(name => general.names.includes(name));
+  const mobility = healthy ? fullBodyMobility.filter(item => movementFits(item)) :
+    (phase !== "early" && describedGeneralSymptoms && movementFits(general.exercise, areas[0]) ? [general.exercise] : []);
+  return {allowed, mobility, gentleTattoo, tattooSession};
 }
 
 const key = "tren-tilpasset-logg-v1";
@@ -596,7 +572,8 @@ function saveHistory(next) {
 
 let variation = 0;
 function renderPlan() {
-  const {areas, names, healthy, acute, urgent, achillesRupture, additionalAssessment, bicepsRupture} = readSymptoms(symptomSearch.value);
+  const symptoms = readSymptoms(symptomSearch.value);
+  const {areas, names, healthy, acute, urgent, achillesRupture, additionalAssessment, bicepsRupture} = symptoms;
   const phase = byId("phase").value;
   const minutes = Number(byId("length").value);
   const result = byId("result");
@@ -606,44 +583,54 @@ function renderPlan() {
   const labels = [...new Set([...names, ...areas.filter(area => area !== "other").map(area => conditions[area])])];
   const matched = labels.length ? `<p class="meta">Gjenkjent: ${labels.join(" · ")}</p>` :
     healthy ? "" : '<p class="meta">Fant ingen kjent plage</p>';
+  const focus = byId("focus").value;
+  const wantsRehab = focus !== "workout" && areas.some(area => area !== "tattoo");
+  const renderRehabInfo = (hasExample = false) => {
+    const sources = rehabSources(symptoms);
+    return `<section class="plan-section"><h3>Opptrening for området</h3>
+      <p class="subtle">${hasExample ? "Bevegelsen under er et generelt eksempel fra NHS Inform." :
+        "Øvelser og belastning må velges ut fra skaden og hvordan den er vurdert. Bruk opplegget fra behandleren."}</p>
+      ${sources.length ? `<ul>${sources.map(source => `<li><a href="${source.url}">${source.label}</a>${source.note ? `<p>${source.note}</p>` : ""}</li>`).join("")}</ul>` : ""}
+      <p><a href="/behandlere/">Finn fysioterapeut eller annen behandler</a></p></section>`;
+  };
   if (selection.message) {
-    result.innerHTML = `${matched}<h2>${selection.message}</h2><p class="note warn">${selection.detail}</p>`;
+    result.innerHTML = `${matched}<h2>${selection.message}</h2><p class="note warn">${selection.detail}</p>${wantsRehab && !urgent && !byId("alert").checked ? renderRehabInfo() : ""}`;
     return;
   }
-  const focus = byId("focus").value;
   const workout = focus === "mobility" || !selection.allowed.length ? null :
-    createWorkout(selection.allowed, minutes, variation, selection.gentleTattoo && !selection.tattooSession, phase);
-  const rehab = focus === "workout" ? [] : selection.rehab;
-  const mobility = focus === "workout" ? [] : selection.mobility.filter(item => !rehab.includes(item));
+    createWorkout(selection.allowed, minutes, variation, selection.gentleTattoo && !selection.tattooSession, phase, !healthy);
+  const mobility = focus === "workout" ? [] : selection.mobility;
   const adviceText = selection.achillesHelp || selection.advice;
   const advice = adviceText ? `<p class="note">${adviceText}</p>` : "";
-  if (!workout && !mobility.length && !rehab.length) {
+  if (!workout && !mobility.length) {
+    if (wantsRehab) {
+      result.innerHTML = `${matched}${advice}${renderRehabInfo()}`;
+      return;
+    }
     result.innerHTML = `${matched}<h2>Ingen øvelser passer</h2>${advice || '<p class="note">Appen finner ingen øvelser i denne økttypen som passer med området du vil holde i ro og begrensningene du valgte.</p>'}`;
     return;
   }
   void fetch("/usage", {method:"POST", credentials:"omit", keepalive:true}).catch(() => {});
-  const areasToTrain = areas.filter(area => mobilityByArea[area]).map(area => conditions[area].toLowerCase());
+  const areasToTrain = areas.filter(area => gentleMobility[area]).map(area => conditions[area].toLowerCase());
   const mobilityTitle = areasToTrain.length ? `Bevegelighet for ${areasToTrain.join(" og ")}` : "Tøyeprogram";
   const title = selection.achillesHelp && workout ? "Sittende overkroppsøkt" :
-    workout?.title ?? (mobility.length && !rehab.length ? mobilityTitle : "Opptrening og bevegelighet");
+    workout?.title ?? (mobility.length ? mobilityTitle : "Opptrening og bevegelighet");
   const exerciseRow = (item, amount) =>
     `<article class="exercise"><strong>${item.name}</strong><span class="dose">${amount}</span>
       <canvas width="320" height="160" data-movement="${item.name}" data-gear="${item.gear ?? ""}" aria-hidden="true" hidden></canvas>
       <small>${item.detail}</small>
       ${item.technical ? '<a class="exercise-video" href="https://www.crossfit.com/crossfit-movements">Se teknikkvideoer hos CrossFit</a>' : ""}
     </article>`;
-  const rehabSection = rehab.length ? `<section class="plan-section"><h3>Opptrening</h3>
-    <p class="subtle">Gjør bevegelsene rolig hvis de passer med opplegget fra behandleren.</p>
-    ${rehab.map(item => exerciseRow(item, item.dose)).join("")}</section>` : "";
+  const rehabSection = wantsRehab ? renderRehabInfo(Boolean(mobility.length)) : "";
   const equipmentNote = workout && byId("gear").value !== "body" && !workout.items.some(item => item.gear)
-    ? '<p class="subtle">Appen fant ingen frivektøvelser som passer med disse valgene. Økta bruker kroppsvekt.</p>' : "";
+    ? '<p class="subtle">Appen fant ingen frivektøvelser som lar skadestedet hvile med disse valgene. Denne økta bruker kroppsvekt.</p>' : "";
   const workoutSection = workout ? `<section class="plan-section"><h3>${selection.achillesHelp ? "Økt uten belastning på den skadde foten" : "Trening rundt skaden"}</h3><p class="subtle">${selection.achillesHelp ? workout.title + ". " : ""}${workout.instruction}</p>
     ${equipmentNote}${workout.items.map(item => exerciseRow(item, workout.amount(item))).join("")}
     ${workout.canVary ? '<button class="remove" id="nextWorkout" type="button">Vis en annen treningsøkt</button>' : ""}</section>` : "";
   const mobilitySection = mobility.length ? `<section class="plan-section">${title === mobilityTitle ? "" : `<h3>${mobilityTitle}</h3>`}
     <p class="subtle">Ta øvelsene i rekkefølge. Bruk rolige bevegelser og hold bare stillingen der øvelsen angir en holdetid.</p>
     ${mobility.map(item => exerciseRow(item, item.dose)).join("")}</section>` :
-    focus === "both" && !rehab.length && !advice ? '<p class="subtle">Ingen tøyeøvelser passer med valgene dine.</p>' : "";
+    focus === "both" && !wantsRehab && !advice ? '<p class="subtle">Ingen tøyeøvelser passer med valgene dine.</p>' : "";
   const protectNote = workout && areas.some(area => area !== "tattoo") ?
     " Hold skadestedet i ro. Hopp over en øvelse hvis du må bruke området for å utføre den eller komme i stilling." : "";
   const tattooNote = areas.includes("tattoo") ? " Unngå trykk og gnissing på tatoveringen, og følg rådene fra tatovøren." : "";
@@ -651,7 +638,7 @@ function renderPlan() {
     <h2>${title}</h2><p class="note">${selection.gentleTattoo && !selection.tattooSession ?
       "Hvis etterbehandlingen tillater det, kan du ta en kort, rolig gåtur." :
       "Start lett. Stopp hvis plagene øker underveis, og sjekk hvordan kroppen reagerer samme dag og neste dag."}${protectNote}${tattooNote}</p>
-    ${advice}${rehabSection}${workoutSection}${mobilitySection}
+    ${advice}${workoutSection}${rehabSection}${mobilitySection}
     <label class="check">Hvordan gikk økten?<select id="feedback"><option value="">Velg respons</option><option value="Gikk fint">Gikk fint</option><option value="Ubehag">Ubehag</option><option value="Stoppet økten">Stoppet økten</option></select></label>
     <button class="primary" id="save" type="button">Lagre i loggen</button><p id="saveStatus" role="status"></p>`;
   if (typeof drawExerciseFigures === "function") drawExerciseFigures(result);
@@ -665,7 +652,7 @@ function renderPlan() {
     const feedback = byId("feedback").value;
     if (!feedback) { byId("feedback").focus(); return; }
     const ok = saveHistory([{title, areas:areas.map(area => conditions[area]).join(" · "), phase:phases[phase],
-      feedback, date:new Date().toISOString(), exercises:[...rehab, ...(workout?.items ?? []), ...mobility].map(item => item.name)}, ...history]);
+      feedback, date:new Date().toISOString(), exercises:[...(workout?.items ?? []), ...mobility].map(item => item.name)}, ...history]);
     byId("saveStatus").textContent = ok ? "Økten er lagret." : "Kunne ikke lagre økten på denne enheten.";
     if (ok) byId("save").disabled = true;
   };
