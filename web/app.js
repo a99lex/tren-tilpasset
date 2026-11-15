@@ -149,6 +149,55 @@ function readSymptoms(query) {
   };
 }
 
+const suggestionAliases = {
+  "Akillesplager": ["achilles pain", "vondt i akillesen", "akkiles"],
+  "Akillesruptur": ["røket akillesen", "røket akkiles", "torn achilles"],
+  "Bicepsruptur": ["røket biceps", "torn biceps", "skadet røket biceps"],
+  "Hopperkne": ["jumper’s knee", "jumpere knee", "patellar tendinopathy"],
+  "Korsryggsmerter": ["vondt i korsryggen", "korsryg vondt", "lower back pain"],
+  "Nakkesmerter": ["vondt i nakken", "neck pain"],
+  "Rotatorcuffplager": ["inopingmenet", "impingement", "shoulder impingement"],
+  "Bakside lår / hamstring": ["strekk i hamstrin", "hamstring strain"],
+  "Tennisalbue": ["albu", "tennis elbow"],
+  "Ankelskade": ["overtråkk", "ankle sprain"],
+  "Ny tatovering": ["fresh tattoo"],
+  "Ny tatovering på underarmen": ["fresh forearm tattoo", "fersk underarmstatovering"]
+};
+
+const searchableInjuries = [...new Map([
+  ...conditionsFromReview, ...additionalConditions,
+  ...Object.keys(suggestionAliases).map(name => ({name})),
+  ...Object.values(conditions).filter(name => name !== "Annen skade" && !name.includes("/")).map(name => ({name}))
+].map(entry => [entry.name, entry])).values()].map(entry => ({
+  ...entry,
+  phrases: [entry.name, ...(suggestionAliases[entry.name] ?? [])].map(normalize),
+  symptoms: readSymptoms(entry.name)
+}));
+
+function suggestInjuries(query) {
+  const normalized = normalize(query);
+  if (normalized.length < 2 || /\b(?:og|and|men|but)\b/.test(normalized)) return [];
+  const current = readSymptoms(query);
+  if (current.urgent || current.healthy || current.areas.filter(area => area !== "other").length > 1) return [];
+  const terms = normalized.split(" ").filter(word =>
+    !["vondt","smerte","smerter","jeg","har","i","pa","med","pain","in","my","the"].includes(word));
+  if (!terms.length) return [];
+  return searchableInjuries.flatMap(entry => {
+    const {symptoms} = entry;
+    if ((symptoms.areas.includes("other") && !entry.terms) || (current.acute && !symptoms.acute)) return [];
+    if ((current.achillesRupture && !symptoms.achillesRupture) ||
+        (current.bicepsRupture && !symptoms.bicepsRupture) ||
+        (current.additionalAssessment && !symptoms.additionalAssessment)) return [];
+    const tattooLocationQuery = symptoms.areas.includes("tattoo") && !current.acute &&
+      /\b(?:fersk|fresh|tatover\w*|tattoo\w*)\b/.test(normalized);
+    if (!tattooLocationQuery && current.areas.some(area => area !== "other" && !symptoms.areas.includes(area))) return [];
+    if (current.names.includes(entry.name)) return [{name:entry.name, rank:0}];
+    const rank = Math.min(...entry.phrases.map(phrase => phrase === normalized ? 0 : phrase.startsWith(normalized) ? 1 :
+      terms.every(term => phrase.split(" ").some(word => word.startsWith(term))) ? 2 : Infinity));
+    return Number.isFinite(rank) ? [{name:entry.name, rank}] : [];
+  }).sort((a,b) => a.rank - b.rank).slice(0,5).map(entry => entry.name);
+}
+
 // These areas can be found by search but need an individual exercise plan.
 const assessmentAreas = new Set(["head", "chest", "abdomen", "pelvis", "other"]);
 
@@ -585,11 +634,66 @@ function resetResult() {
   resultPanel.replaceChildren();
 }
 byId("planner").addEventListener("change", resetResult);
-symptomSearch.addEventListener("input", () => {
+const injurySuggestions = byId("injurySuggestions");
+
+function closeSuggestions() {
+  injurySuggestions.hidden = true;
+  injurySuggestions.replaceChildren();
+}
+
+function symptomInputChanged() {
   const {tattooLocation} = readSymptoms(symptomSearch.value);
   if (tattooLocation) byId("location").value = tattooLocation;
   byId("tattooReady").checked = false;
   byId("upperBodyClearance").checked = false;
   byId("activityClearance").checked = false;
   resetResult();
+}
+
+function showSuggestions() {
+  closeSuggestions();
+  const suggestions = suggestInjuries(symptomSearch.value);
+  if (!suggestions.length) return;
+  suggestions.forEach(name => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.textContent = name;
+    button.onpointerdown = event => event.preventDefault();
+    button.onclick = () => {
+      symptomSearch.value = name;
+      symptomInputChanged();
+      symptomSearch.focus();
+      closeSuggestions();
+    };
+    injurySuggestions.append(button);
+  });
+  injurySuggestions.hidden = false;
+}
+
+symptomSearch.addEventListener("input", () => {
+  symptomInputChanged();
+  showSuggestions();
+});
+symptomSearch.addEventListener("keydown", event => {
+  if (event.key === "Escape" && !injurySuggestions.hidden) {
+    event.preventDefault();
+    closeSuggestions();
+  } else if (event.key === "ArrowDown" && !injurySuggestions.hidden) {
+    event.preventDefault();
+    injurySuggestions.firstElementChild?.focus();
+  }
+});
+injurySuggestions.addEventListener("keydown", event => {
+  if (event.key === "Escape") {
+    event.preventDefault();
+    symptomSearch.focus();
+    closeSuggestions();
+  } else if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+    event.preventDefault();
+    const next = event.key === "ArrowDown" ? event.target.nextElementSibling : event.target.previousElementSibling;
+    (next ?? symptomSearch).focus();
+  }
+});
+byId("injuryEntry").addEventListener("focusout", event => {
+  if (!event.currentTarget.contains(event.relatedTarget)) closeSuggestions();
 });

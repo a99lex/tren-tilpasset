@@ -150,3 +150,7 @@ footer { padding-block: 22px 32px; font-size: 13px; }
 .resource-section { margin-top: 28px; }
 .resource-section > h2 { margin-bottom: 14px; }
 .resource-links li + li { margin-top: 8px; }
+
+.injury-suggestions { display: grid; gap: 3px; margin: 6px 0; padding: 4px; border: 1px solid var(--line); border-radius: 9px; }
+.injury-suggestions button { padding: 9px 10px; text-align: left; border: 0; border-radius: 5px; background: #f5f8f3; color: inherit; }
+.injury-suggestions button:hover, .injury-suggestions button:focus-visible { background: #e0eee5; }

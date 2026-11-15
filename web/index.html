@@ -8,8 +8,9 @@
 <main><section class="hero"><h1>Tren på dine vilkår<span>.</span></h1><p>Skriv hva du må ta hensyn til, velg fase og få en økt.</p></section>
 <div class="grid" id="planView">
 <form class="panel" id="planner"><h2>Lag en økt</h2>
-<label class="symptom-label" for="symptomSearch">Hva skal du ta hensyn til?</label>
+<div id="injuryEntry"><label class="symptom-label" for="symptomSearch">Hva skal du ta hensyn til?</label>
 <input type="search" id="symptomSearch" autocomplete="off" aria-describedby="symptomHelp" required>
+<div id="injurySuggestions" class="injury-suggestions" role="group" aria-label="Forslag til skader og plager" hidden></div></div>
 <p class="symptom-help" id="symptomHelp">Beskriv plagen med egne ord på norsk eller engelsk. Skriv «ingen skade» hvis det ikke er noe du trenger å skåne.</p>
 <label class="phase-label" id="phaseLabel" for="phase">Hvor er du i opptreningen?</label>
 <select id="phase" required>
