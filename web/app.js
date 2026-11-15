@@ -627,7 +627,11 @@ function renderPlan() {
   const title = selection.achillesHelp && workout ? "Sittende overkroppsøkt" :
     workout?.title ?? (mobility.length && !rehab.length ? mobilityTitle : "Opptrening og bevegelighet");
   const exerciseRow = (item, amount) =>
-    `<div class="exercise"><strong>${item.name}</strong><span class="dose">${amount}</span><small>${item.detail}</small></div>`;
+    `<article class="exercise"><strong>${item.name}</strong><span class="dose">${amount}</span>
+      <canvas width="320" height="160" data-movement="${item.name}" data-gear="${item.gear ?? ""}" aria-hidden="true" hidden></canvas>
+      <small>${item.detail}</small>
+      ${item.technical ? '<a class="exercise-video" href="https://www.crossfit.com/crossfit-movements">Se teknikkvideoer hos CrossFit</a>' : ""}
+    </article>`;
   const rehabSection = rehab.length ? `<section class="plan-section"><h3>Opptrening</h3>
     <p class="subtle">Gjør bevegelsene rolig hvis de passer med opplegget fra behandleren.</p>
     ${rehab.map(item => exerciseRow(item, item.dose)).join("")}</section>` : "";
@@ -650,6 +654,7 @@ function renderPlan() {
     ${advice}${rehabSection}${workoutSection}${mobilitySection}
     <label class="check">Hvordan gikk økten?<select id="feedback"><option value="">Velg respons</option><option value="Gikk fint">Gikk fint</option><option value="Ubehag">Ubehag</option><option value="Stoppet økten">Stoppet økten</option></select></label>
     <button class="primary" id="save" type="button">Lagre i loggen</button><p id="saveStatus" role="status"></p>`;
+  if (typeof drawExerciseFigures === "function") drawExerciseFigures(result);
   const nextWorkout = byId("nextWorkout");
   if (nextWorkout) nextWorkout.onclick = () => {
     variation += 1;
